@@ -7,5 +7,4 @@ public interface Plantable {
     void removeSeeds();
 
     int seedCount();
-
 }

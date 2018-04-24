@@ -33,9 +33,9 @@ public class Kalah {
             } else {
                 int houseNumber = Integer.parseInt(input);
                 Move move = game.Move(houseNumber);
-                if (move.equals(EMPTY_HOUSE)){
+                if (move.equals(EMPTY_HOUSE)) {
                     asciiView.printEmptyHouse();
-                } else if (move.equals(GAME_OVER)){
+                } else if (move.equals(GAME_OVER)) {
                     asciiView.printBoard();
                     asciiView.printGameOver();
                     asciiView.printBoard();

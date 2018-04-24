@@ -37,4 +37,12 @@ public class House implements Plantable {
                 ", seedCount=" + seedCount +
                 '}';
     }
+
+    public boolean canCapture(House oppositeHouse) {
+        return seedCount == 1 && oppositeHouse.seedCount > 0;
+    }
+
+    public boolean isEmpty() {
+        return seedCount == 0;
+    }
 }

@@ -19,42 +19,45 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(i + 1, numHouses, numInitialSeeds));
         }
-        currentTurnsPlayer = getPlayer(1);
+        currentTurnsPlayer = players.get(0);
     }
 
     public Move Move(int houseNumber) {
         Move move = validateMove(houseNumber);
-        if (!move.equals(VALID)){
+        if (!move.equals(VALID)) {
             return move;
         }
-        Player player = currentTurnsPlayer;
-        Plantable plantable = player.getHouse(houseNumber);
+        Player currentPlayersHouses = currentTurnsPlayer;
+        Plantable plantable = currentPlayersHouses.getHouse(houseNumber);
         int numSeeds = plantable.seedCount();
         plantable.removeSeeds();
 
-        Player nextTurnsPlayer = nextPlayer(player);
+        Player nextTurnsPlayer = nextPlayer(currentPlayersHouses);
         while (numSeeds-- > 0) {
-            plantable = player.getNext(plantable);
-            if (plantable instanceof Store){
-                if (!player.equals(currentTurnsPlayer)){
-                    player = nextPlayer(player);
-                    plantable = player.getNext(plantable);
+            plantable = currentPlayersHouses.getNext(plantable);
+            if (plantable instanceof Store) {
+                if (currentPlayersHouses.equals(currentTurnsPlayer)) {
+                    currentPlayersHouses = nextPlayer(currentPlayersHouses);
                 } else {
-                    player = nextPlayer(player);
+                    currentPlayersHouses = nextPlayer(currentPlayersHouses);
+                    plantable = currentPlayersHouses.getNext(plantable);
                 }
             }
 
             plantable.addSeed();
 
-            if (numSeeds == 0){
-                if (plantable instanceof Store){
+            if (numSeeds == 0) {
+                // Visitor pattern on plantable. visitLastSeed()
+                // Return next player (if store -> this else next?)
+                // if house -> check if capturable -> capture
+                if (plantable instanceof Store) {
                     nextTurnsPlayer = currentTurnsPlayer;
                 }
-                if (plantable instanceof House){
-                    House house = (House)plantable;
-                    House oppositeHouse = nextPlayer(player).getOppositeHouse(house);
-                    if (player.equals(currentTurnsPlayer) && isCapturable(house, oppositeHouse)){
-                        player.capture(house, oppositeHouse);
+                if (plantable instanceof House) {
+                    House house = (House) plantable;
+                    House oppositeHouse = nextPlayer(currentPlayersHouses).getOppositeHouse(house);
+                    if (currentPlayersHouses.equals(currentTurnsPlayer) && house.canCapture(oppositeHouse)) {
+                        currentPlayersHouses.capture(house, oppositeHouse);
                     }
                 }
             }
@@ -63,22 +66,18 @@ public class Game {
         return validateGameBoard();
     }
 
-    private Move validateMove(int houseNumber){
-        if (currentTurnsPlayer.getHouse(houseNumber).seedCount() == 0){
+    private Move validateMove(int houseNumber) {
+        if (currentTurnsPlayer.getHouse(houseNumber).isEmpty()) {
             return EMPTY_HOUSE;
         }
         return VALID;
     }
 
-    private Move validateGameBoard(){
-        if (currentTurnsPlayer.housesAreEmpty()){
+    private Move validateGameBoard() {
+        if (currentTurnsPlayer.housesAreEmpty()) {
             return GAME_OVER;
         }
         return VALID;
-    }
-
-    private boolean isCapturable(House house, House oppositeHouse){
-        return house.seedCount() == 1 && oppositeHouse.seedCount() > 0;
     }
 
     private Player nextPlayer(Player player) {
@@ -112,8 +111,8 @@ public class Game {
 
     public List<Score> getScores() {
         List<Score> scores = new ArrayList<>();
-        for (Player p : players){
-            scores.add(new Score(p.getPlayerNumber(), p.seedCount()));
+        for (Player p : players) {
+            scores.add(p.getScore());
         }
         return scores;
     }

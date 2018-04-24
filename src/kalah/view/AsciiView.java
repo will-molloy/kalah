@@ -12,7 +12,7 @@ import static kalah.util.MathUtil.getDigitLength;
 import static kalah.util.StringFormatter.formatInteger;
 import static kalah.util.StringFormatter.repeatString;
 
-// make super class!
+// make super class! OBSERVER PATTERN. Update method triggers printing. Kalah(Controller) class simply wires Model and view.
 
 /**
  * Renders Kalah game game in ASCII (stdout).
@@ -166,17 +166,17 @@ public class AsciiView {
 
     public void printScores(List<Score> scores) {
         List<Score> winners = new ArrayList<>();
-        winners.add(new Score(-1,-1));
-        for (Score s : scores){
-            if (s.score() >= winners.get(0).score()){
-                if (s.score() > winners.get(0).score()){
+        winners.add(new Score(-1, -1));
+        for (Score s : scores) {
+            if (s.score() >= winners.get(0).score()) {
+                if (s.score() > winners.get(0).score()) {
                     winners = new ArrayList<>();
                 }
                 winners.add(s);
             }
-            io.println("\tplayer " +s.playerNumber()+":"+s.score());
+            io.println("\tplayer " + s.playerNumber() + ":" + s.score());
         }
-        if (winners.size() > 1){
+        if (winners.size() > 1) {
             io.println("A tie!");
         } else {
             io.println("Player " + winners.get(0).playerNumber() + " wins!");

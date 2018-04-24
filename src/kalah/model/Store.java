@@ -2,35 +2,35 @@ package kalah.model;
 
 public class Store implements Plantable {
 
-    private int count;
+    private int seedCount;
 
     public Store() {
-        this.count = 0;
+        this.seedCount = 0;
     }
 
     @Override
     public void addSeed() {
-        count++;
+        seedCount++;
     }
 
     @Override
     public void removeSeeds() {
-        count = 0;
+        seedCount = 0;
     }
 
     @Override
     public int seedCount() {
-        return count;
+        return seedCount;
+    }
+
+    public void addSeeds(int amount) {
+        seedCount += amount;
     }
 
     @Override
     public String toString() {
         return "Store{" +
-                "count=" + count +
+                "seedCount=" + seedCount +
                 '}';
-    }
-
-    public void addSeeds(int amount) {
-        count += amount;
     }
 }

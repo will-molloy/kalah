@@ -32,12 +32,12 @@ public class Player {
     }
 
     public Plantable getNext(Plantable plantable) {
-        if (plantable instanceof Store){
+        if (plantable instanceof Store) {
             return getHouse(1);
         } else {
-            House house = (House)plantable;
+            House house = (House) plantable;
             int nextNumber = house.number() + 1;
-            if (nextNumber > houses.size()){
+            if (nextNumber > houses.size()) {
                 return store;
             }
             return getHouse(nextNumber);
@@ -56,37 +56,32 @@ public class Player {
         return store;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "playerNumber=" + playerNumber +
-                ", houses=" + houses +
-                ", store=" + store +
-                '}';
-    }
-
     public House getOppositeHouse(House house) {
         return getHouse(houses.size() - house.number() + 1);
     }
 
     public void capture(House house, House oppositeHouse) {
         store.addSeeds(house.seedCount() + oppositeHouse.seedCount());
-        house.removeSeeds(); // would prefer it starts on 0...
+        house.removeSeeds();
         oppositeHouse.removeSeeds();
     }
 
     public boolean housesAreEmpty() {
-        for (House h : houses){
-            if (h.seedCount() > 0){
+        for (House h : houses) {
+            if (h.seedCount() > 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public int seedCount() {
+    public Score getScore() {
+        return new Score(playerNumber, seedCount());
+    }
+
+    private int seedCount() {
         int count = 0;
-        for (House h : houses){
+        for (House h : houses) {
             count += h.seedCount();
         }
         count += store.seedCount();
