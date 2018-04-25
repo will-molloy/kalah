@@ -4,7 +4,8 @@ import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
 import kalah.model.MoveOutcome;
 import kalah.service.Game;
-import kalah.view.AsciiView;
+import kalah.view.AsciiObserver;
+import kalah.view.KalahObserver;
 
 import static kalah.model.MoveOutcome.EMPTY_HOUSE;
 import static kalah.model.MoveOutcome.GAME_OVER;
@@ -22,24 +23,19 @@ public class Kalah {
     // MVC!
     public void play(IO io) {
         Game game = new Game(6, 4, 2);
-        AsciiView asciiView = new AsciiView(game, io);
+        KalahObserver observer = new AsciiObserver(game, io);
         while (true) {
-            asciiView.printBoard();
-            String input = asciiView.printPrompt();
+            String input = observer.nextMove();
             if (input.equals("q")) {
-                asciiView.printGameOver();
-                asciiView.printBoard();
+                observer.gameQuit();
                 break;
             } else {
                 int houseNumber = Integer.parseInt(input);
                 MoveOutcome outcome = game.move(houseNumber);
                 if (outcome.equals(EMPTY_HOUSE)) {
-                    asciiView.printEmptyHouse();
+                    observer.emptyHouseMoveAgain();
                 } else if (outcome.equals(GAME_OVER)) {
-                    asciiView.printBoard();
-                    asciiView.printGameOver();
-                    asciiView.printBoard();
-                    asciiView.printScores();
+                    observer.gameOver();
                     break;
                 }
             }

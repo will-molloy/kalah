@@ -14,15 +14,12 @@ public class Game {
 
     private int currentTurnsPlayer;
 
-    private int numPlayers;
-
     public Game(int numHouses, int numInitialSeeds, int numPlayers) {
         if (numHouses < 1 || numInitialSeeds < 1 || numPlayers < 2) {
             throw new KalahException(String.format(("Not enough houses (%d), seeds (%d), or players (%d)."),
                     numHouses, numInitialSeeds, numPlayers));
         }
         this.board = new Board(numHouses, numInitialSeeds, numPlayers);
-        this.numPlayers = numPlayers;
         currentTurnsPlayer = 1;
     }
 
@@ -33,7 +30,7 @@ public class Game {
         }
         Piece endingPiece = sow(board.getHouse(houseNumber, currentTurnsPlayer));
         if (endingPiece instanceof House) {
-            nextPlayer();
+            currentTurnsPlayer = board.nextPlayer(currentTurnsPlayer);
         }
         return validateBoard();
     }
@@ -59,20 +56,12 @@ public class Game {
         return board.housesAreEmpty(currentTurnsPlayer) ? GAME_OVER : VALID;
     }
 
-    private void nextPlayer() {
-        currentTurnsPlayer = (currentTurnsPlayer % numPlayers) + 1;
-    }
-
     public int getCurrentTurnsPlayer() {
         return currentTurnsPlayer;
     }
 
     public Board getBoard() {
         return board;
-    }
-
-    public int getNumPlayers() {
-        return numPlayers;
     }
 
 }

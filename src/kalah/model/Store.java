@@ -2,7 +2,7 @@ package kalah.model;
 
 public class Store extends Piece {
 
-    public Store(int playerNumber, int seedCount) {
+    Store(int playerNumber, int seedCount) {
         super(playerNumber, seedCount);
     }
 

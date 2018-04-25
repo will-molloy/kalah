@@ -14,10 +14,10 @@ public class Board {
     private final int numPlayers;
 
     // Player Number -> House Number -> House
-    private Map<Integer, Map<Integer, House>> housesMap;
+    private final Map<Integer, Map<Integer, House>> housesMap;
 
     // Player Number -> Store
-    private Map<Integer, Store> storeMap;
+    private final Map<Integer, Store> storeMap;
 
     public Board(int numHouses, int numInitialSeeds, int numPlayers) {
         this.numHouses = numHouses;
@@ -25,13 +25,13 @@ public class Board {
         this.numPlayers = numPlayers;
         housesMap = new HashMap<>();
         storeMap = new HashMap<>();
-        for (int i = 1; i <= numPlayers; i++) {
+        for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
             Map<Integer, House> houses = new HashMap<>();
-            for (int j = 1; j <= numHouses; j++) {
-                houses.put(j, new House(i, j, numInitialSeeds));
+            for (int houseNum = 1; houseNum <= numHouses; houseNum++) {
+                houses.put(houseNum, new House(playerNum, houseNum, numInitialSeeds));
             }
-            this.housesMap.put(i, houses);
-            this.storeMap.put(i, new Store(i, 0));
+            this.housesMap.put(playerNum, houses);
+            this.storeMap.put(playerNum, new Store(playerNum, 0));
         }
         connectPieces();
     }
@@ -66,7 +66,7 @@ public class Board {
         return storeMap.get(playerNumber);
     }
 
-    private int nextPlayer(int playerNum) {
+    public int nextPlayer(int playerNum) {
         return playerNum % numPlayers + 1;
     }
 

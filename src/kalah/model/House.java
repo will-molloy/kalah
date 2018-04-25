@@ -4,7 +4,7 @@ public class House extends Piece {
 
     private final int houseNumber;
 
-    public House(int playerNumber, int houseNumber, int seedCount) {
+    House(int playerNumber, int houseNumber, int seedCount) {
         super(playerNumber, seedCount);
         this.houseNumber = houseNumber;
     }

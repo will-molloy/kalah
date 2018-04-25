@@ -17,7 +17,7 @@ import static kalah.util.MathUtil.getDigitLength;
 import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
-public class AsciiView {
+public class AsciiObserver implements KalahObserver {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
     private static final int ADDITIONAL_CHARACTERS_PER_STORE = 2; // i.e. " 10 ". Two additional spaces.
@@ -39,7 +39,7 @@ public class AsciiView {
 
     private final int maxHouseNumberLength;
 
-    public AsciiView(Game game, IO io) {
+    public AsciiObserver(Game game, IO io) {
         this.game = game;
         this.board = game.getBoard();
         this.io = io;
@@ -47,23 +47,47 @@ public class AsciiView {
         maxHouseNumberLength = getDigitLength(board.maxHouseNumber());
     }
 
-    public String printPrompt() {
-        return io.readFromKeyboard("Player " + PLAYER_SYMBOL +
-                game.getCurrentTurnsPlayer() +
+    @Override
+    public String nextMove() {
+        printBoard();
+        return printPrompt();
+    }
+
+    @Override
+    public void emptyHouseMoveAgain() {
+        printEmptyHouse();
+    }
+
+    @Override
+    public void gameQuit() {
+        printGameOver();
+        printBoard();
+    }
+
+    @Override
+    public void gameOver() {
+        printBoard();
+        printGameOver();
+        printBoard();
+        printScores();
+    }
+
+    private String printPrompt() {
+        return io.readFromKeyboard("Player " + PLAYER_SYMBOL + game.getCurrentTurnsPlayer() +
                 "'s turn - Specify house number or 'q' to quit: ");
     }
 
-    public void printBoard() {
+    private void printBoard() {
         io.println(boardOuter());
-        printPlayers();
+        printPlayerPieces();
         io.println(boardOuter());
     }
 
-    private void printPlayers() {
+    private void printPlayerPieces() {
         boolean reverse = true;
-        for (int i = game.getNumPlayers(); i > 0; i--) {
+        for (int i = board.getNumPlayers(); i > 0; i--) {
             List<House> houses = board.getHouses(i);
-            Store store = board.getStore((i % game.getNumPlayers()) + 1);
+            Store store = board.getStore((i % board.getNumPlayers()) + 1);
             if (reverse) {
                 io.println(reverseHouseOrder(houses, store, i));
             } else {
@@ -155,15 +179,15 @@ public class AsciiView {
                 VERTICAL_SYMBOL;
     }
 
-    public void printGameOver() {
+    private void printGameOver() {
         io.println("Game over");
     }
 
-    public void printEmptyHouse() {
+    private void printEmptyHouse() {
         io.println("House is empty. Move again.");
     }
 
-    public void printScores() {
+    private void printScores() {
         Scorer scorer = new Scorer(board);
         for (Score s : scorer.getScores()) {
             io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
