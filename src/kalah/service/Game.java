@@ -43,11 +43,11 @@ public class Game {
         int seeds = piece.getCountAndRemoveSeeds();
         while (seeds > 0) {
             piece = piece.next();
-            seeds -= piece.addSeedIfPlayerCan(currentTurnsPlayer);
+            seeds -= piece.sowSeedIfPlayerCan(currentTurnsPlayer);
         }
         if (piece.canCapture(currentTurnsPlayer)) {
             int amount = piece.capture();
-            board.getStore(currentTurnsPlayer).addSeedsIfPlayerCan(amount, currentTurnsPlayer);
+            board.getStore(currentTurnsPlayer).sowSeedsIfPlayerCan(amount, currentTurnsPlayer);
         }
         return piece;
     }

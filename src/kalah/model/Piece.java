@@ -35,8 +35,8 @@ public abstract class Piece {
         return nextPiece;
     }
 
-    public final int addSeedsIfPlayerCan(int amount, int playerNumber) {
-        if (canAddSeeds(playerNumber)) {
+    public final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
+        if (canSow(playerNumber)) {
             seedCount += amount;
             return amount;
         } else {
@@ -44,10 +44,10 @@ public abstract class Piece {
         }
     }
 
-    abstract boolean canAddSeeds(int playerNumber);
+    abstract boolean canSow(int playerNumber);
 
-    public final int addSeedIfPlayerCan(int playerNumber) {
-        return addSeedsIfPlayerCan(1, playerNumber);
+    public final int sowSeedIfPlayerCan(int playerNumber) {
+        return sowSeedsIfPlayerCan(1, playerNumber);
     }
 
     public final int seedCount() {

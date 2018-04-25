@@ -7,7 +7,7 @@ public class Store extends Piece {
     }
 
     @Override
-    boolean canAddSeeds(int playerNumber) {
+    boolean canSow(int playerNumber) {
         return playerNumber == this.playerNumber;
     }
 

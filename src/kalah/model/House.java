@@ -10,7 +10,7 @@ public class House extends Piece {
     }
 
     @Override
-    boolean canAddSeeds(int playerNumber) {
+    boolean canSow(int playerNumber) {
         return true;
     }
 
