@@ -1,48 +1,38 @@
 package kalah.model;
 
-public class House implements Plantable {
+public class House extends Piece {
 
-    private final int number;
+    private final int houseNumber;
 
-    private int seedCount;
-
-    public House(int number, int seedCount) {
-        this.number = number;
-        this.seedCount = seedCount;
-    }
-
-    public int number() {
-        return number;
-    }
-
-    @Override
-    public int seedCount() {
-        return seedCount;
-    }
-
-    @Override
-    public void addSeed() {
-        seedCount++;
-    }
-
-    @Override
-    public void removeSeeds() {
-        seedCount = 0;
-    }
-
-    @Override
-    public String toString() {
-        return "House{" +
-                "number=" + number +
-                ", seedCount=" + seedCount +
-                '}';
-    }
-
-    public boolean canCapture(House oppositeHouse) {
-        return seedCount == 1 && oppositeHouse.seedCount > 0;
+    public House(int playerNumber, int houseNumber, int seedCount) {
+        super(playerNumber, seedCount);
+        this.houseNumber = houseNumber;
     }
 
     public boolean isEmpty() {
         return seedCount == 0;
+    }
+
+    @Override
+    boolean canSow(int playerNumber) {
+        return true;
+    }
+
+    @Override
+    public boolean canCapture(int playerNumber, House oppositeHouse) {
+        return playerNumber == this.playerNumber && seedCount == 1 && oppositeHouse.seedCount > 0;
+    }
+
+    @Override
+    public int capture() {
+        return removeSeeds();
+    }
+
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+
+    int getPlayerNumber() {
+        return playerNumber;
     }
 }

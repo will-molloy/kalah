@@ -663,9 +663,9 @@ else {
                             </tr>
                             <tr class="altColor">
                                 <td class="colFirst"><code>java.lang.String</code></td>
-                                <td class="colLast"><code><strong><a href="#readFromKeyboard(java.lang.String)">readFromKeyboard</a></strong>(java.lang.String&nbsp;move)</code>
+                                <td class="colLast"><code><strong><a href="#readFromKeyboard(java.lang.String)">readFromKeyboard</a></strong>(java.lang.String&nbsp;outcome)</code>
                                     <div class="block">Ask for input from standard input (typically the keyboard),
-                                        displaying the specified move
+                                        displaying the specified outcome
                                         to standard output.
                                     </div>
                                 </td>
@@ -673,13 +673,13 @@ else {
                             <tr class="rowColor">
                                 <td class="colFirst"><code>int</code></td>
                                 <td class="colLast"><code><strong><a
-                                        href="#readInteger(java.lang.String,%20int,%20int,%20int,%20java.lang.String)">readInteger</a></strong>(java.lang.String&nbsp;move,
+                                        href="#readInteger(java.lang.String,%20int,%20int,%20int,%20java.lang.String)">readInteger</a></strong>(java.lang.String&nbsp;outcome,
                                     int&nbsp;lower,
                                     int&nbsp;upper,
                                     int&nbsp;cancelResult,
                                     java.lang.String&nbsp;cancelStr)</code>
                                     <div class="block">Ask for an integer input from the standard input (typically the
-                                        keyboard), displaying the specified move
+                                        keyboard), displaying the specified outcome
                                         plus the cancelStr to the current output location, and requiring that the input
                                         be from
                                         the range [lower..upper].
@@ -707,9 +707,9 @@ else {
                         <ul class="blockList">
                             <li class="blockList">
                                 <h4>readFromKeyboard</h4>
-                                <pre>java.lang.String&nbsp;readFromKeyboard(java.lang.String&nbsp;move)</pre>
+                                <pre>java.lang.String&nbsp;readFromKeyboard(java.lang.String&nbsp;outcome)</pre>
                                 <div class="block">Ask for input from standard input (typically the keyboard),
-                                    displaying the specified move
+                                    displaying the specified outcome
                                     to standard output. Example
                                     <pre>
      ...
@@ -730,13 +730,13 @@ else {
                         <ul class="blockList">
                             <li class="blockList">
                                 <h4>readInteger</h4>
-                                <pre>int&nbsp;readInteger(java.lang.String&nbsp;move,
+                                <pre>int&nbsp;readInteger(java.lang.String&nbsp;outcome,
               int&nbsp;lower,
               int&nbsp;upper,
               int&nbsp;cancelResult,
               java.lang.String&nbsp;cancelStr)</pre>
                                 <div class="block">Ask for an integer input from the standard input (typically the
-                                    keyboard), displaying the specified move
+                                    keyboard), displaying the specified outcome
                                     plus the cancelStr to the current output location, and requiring that the input be
                                     from
                                     the range [lower..upper]. If the supplied input matches the cancelStr, then the
@@ -746,7 +746,7 @@ else {
                                     request for input will be repeated. Example:
                                     <pre>
      ...
-     int suppliedInput = io.readInteger("Enter a number between 1 and 20", 1, 20, -1, "no"); // io is of type IO
+     int suppliedInput = io.readInteger("Enter a houseNumber between 1 and 20", 1, 20, -1, "no"); // io is of type IO
      // If what was supplied from standard input was "no", then the variable suppliedInput will have
      // the value -1, otherwise it will have a value between 1 and 20. 
      
@@ -754,7 +754,7 @@ else {
                                 </div>
                                 <dl>
                                     <dt><span class="strong">Parameters:</span></dt>
-                                    <dd><code>move</code> - What message to display when requesting the integer input
+                                    <dd><code>outcome</code> - What message to display when requesting the integer input
                                     </dd>
                                     <dd><code>lower</code> - The lower bound of the range (inclusive)</dd>
                                     <dd><code>upper</code> - The upper bound of the range (inclusive)</dd>

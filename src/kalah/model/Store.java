@@ -1,36 +1,23 @@
 package kalah.model;
 
-public class Store implements Plantable {
+public class Store extends Piece {
 
-    private int seedCount;
-
-    public Store() {
-        this.seedCount = 0;
+    public Store(int playerNumber, int seedCount) {
+        super(playerNumber, seedCount);
     }
 
     @Override
-    public void addSeed() {
-        seedCount++;
+    boolean canSow(int playerNumber) {
+        return playerNumber == this.playerNumber;
     }
 
     @Override
-    public void removeSeeds() {
-        seedCount = 0;
+    public boolean canCapture(int playerNumber, House oppositeHouse) {
+        return false;
     }
 
     @Override
-    public int seedCount() {
-        return seedCount;
-    }
-
-    public void addSeeds(int amount) {
-        seedCount += amount;
-    }
-
-    @Override
-    public String toString() {
-        return "Store{" +
-                "seedCount=" + seedCount +
-                '}';
+    public int capture() {
+        return 0;
     }
 }
