@@ -1,6 +1,6 @@
 package kalah.model;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
     private final int playerNumber;
 
@@ -11,11 +11,25 @@ public class Score {
         this.score = score;
     }
 
-    public int playerNumber() {
+    public int getPlayerNumber() {
         return playerNumber;
     }
 
-    public int score() {
+    public int getScore() {
         return score;
     }
+
+    public boolean isGreaterThanOrEquals(Score that) {
+        return compareTo(that) >= 0;
+    }
+
+    public boolean isGreaterThan(Score that) {
+        return compareTo(that) > 0;
+    }
+
+    @Override
+    public int compareTo(Score that) {
+        return this.score - that.score;
+    }
+
 }

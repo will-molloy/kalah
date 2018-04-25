@@ -7,12 +7,12 @@ public class Store extends Piece {
     }
 
     @Override
-    boolean canSow(int playerNumber) {
+    boolean canAddSeeds(int playerNumber) {
         return playerNumber == this.playerNumber;
     }
 
     @Override
-    public boolean canCapture(int playerNumber, House oppositeHouse) {
+    public boolean canCapture(int playerNumber) {
         return false;
     }
 

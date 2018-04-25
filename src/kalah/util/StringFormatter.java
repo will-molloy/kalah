@@ -11,7 +11,7 @@ public class StringFormatter {
         return builder.toString();
     }
 
-    public static String formatInteger(int value, int numCharacters) {
+    public static String rightAlignInteger(int value, int numCharacters) {
         StringBuilder builder = new StringBuilder(value + "");
         while (builder.length() < numCharacters) {
             builder.insert(0, " ");

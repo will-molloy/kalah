@@ -2,12 +2,12 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
-import kalah.model.Outcome;
+import kalah.model.MoveOutcome;
 import kalah.service.Game;
 import kalah.view.AsciiView;
 
-import static kalah.model.Outcome.EMPTY_HOUSE;
-import static kalah.model.Outcome.GAME_OVER;
+import static kalah.model.MoveOutcome.EMPTY_HOUSE;
+import static kalah.model.MoveOutcome.GAME_OVER;
 
 /**
  * This class is the starting point for a Kalah implementation using
@@ -32,7 +32,7 @@ public class Kalah {
                 break;
             } else {
                 int houseNumber = Integer.parseInt(input);
-                Outcome outcome = game.move(houseNumber);
+                MoveOutcome outcome = game.move(houseNumber);
                 if (outcome.equals(EMPTY_HOUSE)) {
                     asciiView.printEmptyHouse();
                 } else if (outcome.equals(GAME_OVER)) {
@@ -43,7 +43,6 @@ public class Kalah {
                     break;
                 }
             }
-
         }
     }
 }

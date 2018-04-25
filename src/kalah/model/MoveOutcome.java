@@ -1,6 +1,6 @@
 package kalah.model;
 
-public enum Outcome {
+public enum MoveOutcome {
     GAME_OVER,
     EMPTY_HOUSE,
     VALID,

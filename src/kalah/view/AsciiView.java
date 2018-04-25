@@ -3,21 +3,20 @@ package kalah.view;
 import com.qualitascorpus.testsupport.IO;
 import kalah.model.Board;
 import kalah.model.House;
+import kalah.model.Score;
 import kalah.model.Store;
 import kalah.service.Game;
+import kalah.service.Scorer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static java.lang.String.valueOf;
 import static kalah.util.MathUtil.getDigitLength;
-import static kalah.util.StringFormatter.formatInteger;
 import static kalah.util.StringFormatter.repeatString;
+import static kalah.util.StringFormatter.rightAlignInteger;
 
-// make super class! OBSERVER PATTERN. Update method triggers printing. Kalah(Controller) class simply wires Model and view.
-
-/**
- * Renders Kalah board board in ASCII (stdout).
- */
 public class AsciiView {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
@@ -31,17 +30,21 @@ public class AsciiView {
     private static final char GAP_SYMBOL = ' ';
 
     private final Board board;
+
     private final Game game;
+
     private final IO io;
+
     private final int maxSeedCountLength;
+
     private final int maxHouseNumberLength;
 
     public AsciiView(Game game, IO io) {
         this.game = game;
         this.board = game.getBoard();
         this.io = io;
-        maxSeedCountLength = getDigitLength(2 * 6 * 4);
-        maxHouseNumberLength = getDigitLength(6);
+        maxSeedCountLength = getDigitLength(board.numSeeds());
+        maxHouseNumberLength = getDigitLength(board.maxHouseNumber());
     }
 
     public String printPrompt() {
@@ -58,9 +61,9 @@ public class AsciiView {
 
     private void printPlayers() {
         boolean reverse = true;
-        for (int i = board.numPlayers(); i > 0; i--) {
-            List<House> houses = board.getHousesFor(i);
-            Store store = board.getStoreFor((i % board.numPlayers()) + 1);
+        for (int i = game.getNumPlayers(); i > 0; i--) {
+            List<House> houses = board.getHouses(i);
+            Store store = board.getStore((i % game.getNumPlayers()) + 1);
             if (reverse) {
                 io.println(reverseHouseOrder(houses, store, i));
             } else {
@@ -128,15 +131,15 @@ public class AsciiView {
 
     private String formatHouse(House house) {
         return GAP_SYMBOL +
-                formatInteger(house.getHouseNumber(), maxHouseNumberLength) +
+                rightAlignInteger(house.getHouseNumber(), maxHouseNumberLength) +
                 HOUSE_OPEN_BRACE +
-                formatInteger(house.seedCount(), maxSeedCountLength) +
+                rightAlignInteger(house.seedCount(), maxSeedCountLength) +
                 HOUSE_CLOSE_BRACE + GAP_SYMBOL + VERTICAL_SYMBOL;
     }
 
     private String formatStore(Store store) {
         return valueOf(VERTICAL_SYMBOL) + GAP_SYMBOL +
-                formatInteger(store.seedCount(), maxSeedCountLength) +
+                rightAlignInteger(store.seedCount(), maxSeedCountLength) +
                 GAP_SYMBOL + VERTICAL_SYMBOL;
     }
 
@@ -161,33 +164,16 @@ public class AsciiView {
     }
 
     public void printScores() {
-        List<Integer> winners = new ArrayList<>();
-        winners.add(-1);
-        int currentBest = -1;
-        for (int i = 1; i <= board.numPlayers(); i++){
-            int score = computeScore(i);
-            if (score >= currentBest){
-                if (score > currentBest){
-                    winners = new ArrayList<>();
-                    currentBest = score;
-                }
-                winners.add(i);
-            }
-            io.println("\tplayer " + i + ":" + score);
+        Scorer scorer = new Scorer(board);
+        for (Score s : scorer.getScores()) {
+            io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
         }
+        List<Score> winners = scorer.getWinners();
         if (winners.size() > 1) {
             io.println("A tie!");
         } else {
-            io.println("Player " + winners.get(0) + " wins!");
+            io.println("Player " + winners.get(0).getPlayerNumber() + " wins!");
         }
     }
 
-    private int computeScore(int playerNumber){
-        int total = 0;
-        for (House h : board.getHousesFor(playerNumber)){
-            total += h.seedCount();
-        }
-        total += board.getStoreFor(playerNumber).seedCount();
-        return total;
-    }
 }

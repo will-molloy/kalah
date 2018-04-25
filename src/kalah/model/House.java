@@ -9,30 +9,23 @@ public class House extends Piece {
         this.houseNumber = houseNumber;
     }
 
-    public boolean isEmpty() {
-        return seedCount == 0;
-    }
-
     @Override
-    boolean canSow(int playerNumber) {
+    boolean canAddSeeds(int playerNumber) {
         return true;
     }
 
     @Override
-    public boolean canCapture(int playerNumber, House oppositeHouse) {
-        return playerNumber == this.playerNumber && seedCount == 1 && oppositeHouse.seedCount > 0;
+    public boolean canCapture(int playerNumber) {
+        return playerNumber == this.playerNumber && seedCount == 1 && !oppositePiece.isEmpty();
     }
 
     @Override
     public int capture() {
-        return removeSeeds();
+        return getCountAndRemoveSeeds() + oppositePiece.getCountAndRemoveSeeds();
     }
 
     public int getHouseNumber() {
         return houseNumber;
     }
 
-    int getPlayerNumber() {
-        return playerNumber;
-    }
 }
