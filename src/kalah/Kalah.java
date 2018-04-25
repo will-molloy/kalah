@@ -30,10 +30,9 @@ public class Kalah {
                 observer.gameQuit();
                 break;
             } else {
-                int houseNumber = Integer.parseInt(input);
-                MoveOutcome outcome = game.move(houseNumber);
+                MoveOutcome outcome = game.move(Integer.parseInt(input));
                 if (outcome.equals(EMPTY_HOUSE)) {
-                    observer.emptyHouseMoveAgain();
+                    observer.emptyHouse();
                 } else if (outcome.equals(GAME_OVER)) {
                     observer.gameOver();
                     break;

@@ -54,7 +54,7 @@ public class AsciiObserver implements KalahObserver {
     }
 
     @Override
-    public void emptyHouseMoveAgain() {
+    public void emptyHouse() {
         printEmptyHouse();
     }
 

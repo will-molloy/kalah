@@ -8,5 +8,5 @@ public interface KalahObserver {
 
     void gameOver();
 
-    void emptyHouseMoveAgain();
+    void emptyHouse();
 }
