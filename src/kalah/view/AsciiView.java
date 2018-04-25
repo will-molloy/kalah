@@ -1,22 +1,22 @@
 package kalah.view;
 
 import com.qualitascorpus.testsupport.IO;
-import kalah.model.*;
+import kalah.model.Board;
+import kalah.model.House;
+import kalah.model.Score;
+import kalah.model.Store;
+import kalah.service.Game;
+import kalah.service.Scorer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.valueOf;
-import static java.util.Collections.reverse;
 import static kalah.util.MathUtil.getDigitLength;
-import static kalah.util.StringFormatter.formatInteger;
 import static kalah.util.StringFormatter.repeatString;
+import static kalah.util.StringFormatter.rightAlignInteger;
 
-// make super class!
-
-/**
- * Renders Kalah game game in ASCII (stdout).
- */
 public class AsciiView {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
@@ -29,21 +29,27 @@ public class AsciiView {
     private static final char CORNER_SYMBOL = '+';
     private static final char GAP_SYMBOL = ' ';
 
+    private final Board board;
+
     private final Game game;
+
     private final IO io;
+
     private final int maxSeedCountLength;
+
     private final int maxHouseNumberLength;
 
     public AsciiView(Game game, IO io) {
         this.game = game;
+        this.board = game.getBoard();
         this.io = io;
-        maxSeedCountLength = getDigitLength(game.getNumHouses() * game.getNumInitialSeeds());
-        maxHouseNumberLength = getDigitLength(game.getNumHouses());
+        maxSeedCountLength = getDigitLength(board.numSeeds());
+        maxHouseNumberLength = getDigitLength(board.maxHouseNumber());
     }
 
     public String printPrompt() {
         return io.readFromKeyboard("Player " + PLAYER_SYMBOL +
-                game.getCurrentTurnsPlayer().getPlayerNumber() +
+                game.getCurrentTurnsPlayer() +
                 "'s turn - Specify house number or 'q' to quit: ");
     }
 
@@ -51,6 +57,37 @@ public class AsciiView {
         io.println(boardOuter());
         printPlayers();
         io.println(boardOuter());
+    }
+
+    private void printPlayers() {
+        boolean reverse = true;
+        for (int i = game.getNumPlayers(); i > 0; i--) {
+            List<House> houses = board.getHouses(i);
+            Store store = board.getStore((i % game.getNumPlayers()) + 1);
+            if (reverse) {
+                io.println(reverseHouseOrder(houses, store, i));
+            } else {
+                io.println(forwardHouseOrder(houses, store, i));
+            }
+            reverse = !reverse;
+            if (i > 1) {
+                io.println(boardMiddle());
+            }
+        }
+    }
+
+    private String reverseHouseOrder(List<House> houses, Store store, int playerNumber) {
+        List<House> temp = new ArrayList<>(houses);
+        Collections.reverse(temp);
+        return formatPlayerNumber(playerNumber) +
+                formatHouses(temp) +
+                formatStore(store);
+    }
+
+    private String forwardHouseOrder(List<House> houses, Store store, int playerNumber) {
+        return formatStore(store) +
+                formatHouses(houses) +
+                formatPlayerNumber(playerNumber);
     }
 
     private String boardOuter() {
@@ -65,46 +102,14 @@ public class AsciiView {
                 CORNER_SYMBOL;
     }
 
-    private void printPlayers() {
-        boolean reverse = true;
-        for (int i = game.getNumPlayers(); i > 0; i--) {
-            Player player = game.getPlayer(i);
-            if (reverse) {
-                io.println(playerReverseHouseOrder(player));
-            } else {
-                io.println(playerForwardHouseOrder(player));
-            }
-            if (i > 1) {
-                io.println(boardMiddle());
-            }
-            reverse = !reverse;
-        }
-    }
-
     private String centerDash() {
         StringBuilder builder = new StringBuilder();
         String houseDash = repeatString(valueOf(HORIZONTAL_SYMBOL),
                 maxSeedCountLength + maxHouseNumberLength + ADDITIONAL_CHARACTERS_PER_HOUSE) +
                 CORNER_SYMBOL;
-        return builder.append(repeatString(houseDash, game.getNumHouses()))
+        return builder.append(repeatString(houseDash, 6))
                 .deleteCharAt(builder.length() - 1)
                 .toString();
-    }
-
-    private String playerReverseHouseOrder(Player player) {
-        List<House> reverseHouses = new ArrayList<>(player.getHouses());
-        reverse(reverseHouses);
-        return formatPlayerNumber(player.getPlayerNumber()) +
-                formatHouses(reverseHouses) +
-                formatStore(storeToPrint(player));
-    }
-
-    /**
-     * In the Ascii output a player prints the next players store inline with their houses.
-     * Returns the store of the next player.
-     */
-    private Store storeToPrint(Player player) {
-        return game.getPlayer(player.getPlayerNumber() % game.getNumPlayers() + 1).getStore();
     }
 
     private String formatPlayerNumber(int playerNumber) {
@@ -126,22 +131,16 @@ public class AsciiView {
 
     private String formatHouse(House house) {
         return GAP_SYMBOL +
-                formatInteger(house.number(), maxHouseNumberLength) +
+                rightAlignInteger(house.getHouseNumber(), maxHouseNumberLength) +
                 HOUSE_OPEN_BRACE +
-                formatInteger(house.seedCount(), maxSeedCountLength) +
+                rightAlignInteger(house.seedCount(), maxSeedCountLength) +
                 HOUSE_CLOSE_BRACE + GAP_SYMBOL + VERTICAL_SYMBOL;
     }
 
     private String formatStore(Store store) {
         return valueOf(VERTICAL_SYMBOL) + GAP_SYMBOL +
-                formatInteger(store.seedCount(), maxSeedCountLength) +
+                rightAlignInteger(store.seedCount(), maxSeedCountLength) +
                 GAP_SYMBOL + VERTICAL_SYMBOL;
-    }
-
-    private String playerForwardHouseOrder(Player player) {
-        return formatStore(storeToPrint(player)) +
-                formatHouses(player.getHouses()) +
-                formatPlayerNumber(player.getPlayerNumber());
     }
 
     private String boardMiddle() {
@@ -164,22 +163,17 @@ public class AsciiView {
         io.println("House is empty. Move again.");
     }
 
-    public void printScores(List<Score> scores) {
-        List<Score> winners = new ArrayList<>();
-        winners.add(new Score(-1,-1));
-        for (Score s : scores){
-            if (s.score() >= winners.get(0).score()){
-                if (s.score() > winners.get(0).score()){
-                    winners = new ArrayList<>();
-                }
-                winners.add(s);
-            }
-            io.println("\tplayer " +s.playerNumber()+":"+s.score());
+    public void printScores() {
+        Scorer scorer = new Scorer(board);
+        for (Score s : scorer.getScores()) {
+            io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
         }
-        if (winners.size() > 1){
+        List<Score> winners = scorer.getWinners();
+        if (winners.size() > 1) {
             io.println("A tie!");
         } else {
-            io.println("Player " + winners.get(0).playerNumber() + " wins!");
+            io.println("Player " + winners.get(0).getPlayerNumber() + " wins!");
         }
     }
+
 }
