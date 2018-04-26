@@ -19,9 +19,9 @@ public abstract class Piece {
         this.seedCount = seedCount;
     }
 
-    public abstract boolean canCapture(int playerNumber);
+    abstract boolean canCapture(int playerNumber);
 
-    public abstract int capture();
+    abstract int capture();
 
     final void initNextPiece(Piece piece) {
         if (this.nextPiece == null) {
@@ -35,14 +35,14 @@ public abstract class Piece {
         }
     }
 
-    public final Piece next() {
+    final Piece next() {
         return nextPiece;
     }
 
     /**
      * Template method which first checks this piece can be sowed by the player before proceeding.
      */
-    public final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
+    final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
         if (canSow(playerNumber)) {
             seedCount += amount;
             return amount;
@@ -53,7 +53,7 @@ public abstract class Piece {
 
     abstract boolean canSow(int playerNumber);
 
-    public final int sowSeedIfPlayerCan(int playerNumber) {
+    final int sowSeedIfPlayerCan(int playerNumber) {
         return sowSeedsIfPlayerCan(1, playerNumber);
     }
 
@@ -65,7 +65,7 @@ public abstract class Piece {
         return seedCount == 0;
     }
 
-    public final int getCountAndRemoveSeeds() {
+    final int getCountAndRemoveSeeds() {
         int amountRemoved = seedCount;
         seedCount = 0;
         return amountRemoved;

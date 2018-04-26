@@ -21,7 +21,7 @@ public class House extends Piece {
     }
 
     @Override
-    public boolean canCapture(int playerNumber) {
+    boolean canCapture(int playerNumber) {
         return playerNumber == this.playerNumber && seedCount == 1 && !oppositePiece.isEmpty();
     }
 
@@ -29,7 +29,7 @@ public class House extends Piece {
      * Capturing consists of removing the seeds from this house and the opposite house.
      */
     @Override
-    public int capture() {
+    int capture() {
         return getCountAndRemoveSeeds() + oppositePiece.getCountAndRemoveSeeds();
     }
 
