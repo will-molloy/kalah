@@ -21,12 +21,12 @@ public class Store extends Piece {
      * A store piece cannot be captured.
      */
     @Override
-    public boolean canCapture(int playerNumber) {
+    boolean canCapture(int playerNumber) {
         return false;
     }
 
     @Override
-    public int capture() {
+    int capture() {
         return 0;
     }
 }

@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a Kalah board. Contains methods for retrieving board information and pieces. Once initialised the board
- * cannot be modified; only the individual pieces can.
+ * Represents a Kalah board.
  */
 public class Board {
 
@@ -64,7 +63,25 @@ public class Board {
         }
     }
 
-    public House getHouse(int houseNumber, int playerNumber) {
+    /**
+     * Sows the board starting from the given piece; this consists of removing seeds from the starting piece and adding
+     * seeds one by one to the next pieces. The last piece sowed is captured if possible. Returns the last piece sowed.
+     */
+    public Piece sow(int houseNumber, int playerNumber) {
+        Piece piece = getHouse(houseNumber, playerNumber);
+        int seedsToSow = piece.getCountAndRemoveSeeds();
+        while (seedsToSow > 0) {
+            piece = piece.next();
+            seedsToSow -= piece.sowSeedIfPlayerCan(playerNumber);
+        }
+        if (piece.canCapture(playerNumber)) {
+            int seedsCaptured = piece.capture();
+            getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
+        }
+        return piece;
+    }
+
+    private House getHouse(int houseNumber, int playerNumber) {
         return housesMap.get(playerNumber).get(houseNumber);
     }
 

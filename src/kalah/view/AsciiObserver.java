@@ -84,8 +84,8 @@ public class AsciiObserver implements KalahObserver {
     private void printPlayerPieces() {
         boolean reverse = true;
         for (int i = game.numPlayers(); i > 0; i--) {
-            List<House> houses = game.board().getHouses(i);
-            Store store = game.board().getStore((i % game.numPlayers()) + 1);
+            List<House> houses = game.getHouses(i);
+            Store store = game.getStore((i % game.numPlayers()) + 1);
             if (reverse) {
                 io.println(reverseHouseOrder(houses, store, i));
             } else {
