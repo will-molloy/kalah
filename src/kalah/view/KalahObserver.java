@@ -2,7 +2,7 @@ package kalah.view;
 
 /**
  * Represents a Kalah observer. Implementors of the following update methods are signing a contract that they will
- * display the Kalah model to the players.
+ * display a game of Kalah to the players.
  */
 public interface KalahObserver {
 

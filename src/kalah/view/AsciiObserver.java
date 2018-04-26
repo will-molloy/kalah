@@ -5,7 +5,6 @@ import kalah.model.House;
 import kalah.model.Score;
 import kalah.model.Store;
 import kalah.service.GameService;
-import kalah.service.ScoreService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -187,11 +186,10 @@ public class AsciiObserver implements KalahObserver {
     }
 
     private void printScores() {
-        ScoreService scoreService = new ScoreService(game.board(), game.numPlayers());
-        for (Score s : scoreService.getScores()) {
+        for (Score s : game.getScores()) {
             io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
         }
-        List<Score> winners = scoreService.getWinners();
+        List<Score> winners = game.getWinners();
         if (winners.size() > 1) {
             io.println("A tie!");
         } else {

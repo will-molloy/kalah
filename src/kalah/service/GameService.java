@@ -4,6 +4,9 @@ import kalah.error.KalahException;
 import kalah.model.Board;
 import kalah.model.House;
 import kalah.model.Piece;
+import kalah.model.Score;
+
+import java.util.List;
 
 import static kalah.service.MoveOutcome.*;
 
@@ -15,6 +18,8 @@ import static kalah.service.MoveOutcome.*;
 public class GameService {
 
     private final Board board;
+
+    private final ScoreService scoreService;
 
     private final int numHouses;
 
@@ -37,6 +42,7 @@ public class GameService {
                     numHouses, numInitialSeeds, numPlayers));
         }
         this.board = new Board(numHouses, numInitialSeeds, numPlayers);
+        this.scoreService = new ScoreService(board, numPlayers);
         currentTurnsPlayer = 1;
     }
 
@@ -50,7 +56,7 @@ public class GameService {
         if (!outcome.equals(VALID)) {
             return outcome;
         }
-        Piece endingPiece = sow(board.getHouse(houseNumber, currentTurnsPlayer));
+        Piece endingPiece = sowBoard(board.getHouse(houseNumber, currentTurnsPlayer));
         if (endingPiece instanceof House) {
             currentTurnsPlayer = board.nextPlayer(currentTurnsPlayer);
         }
@@ -65,7 +71,7 @@ public class GameService {
      * Sows the board starting from the given piece; this consists of removing seeds from the starting piece and adding
      * seeds one by one to the next pieces. The last piece sowed is captured if possible. Returns the last piece sowed.
      */
-    private Piece sow(Piece piece) {
+    private Piece sowBoard(Piece piece) {
         int seedsToSow = piece.getCountAndRemoveSeeds();
         while (seedsToSow > 0) {
             piece = piece.next();
@@ -100,5 +106,13 @@ public class GameService {
 
     public int numPlayers() {
         return numPlayers;
+    }
+
+    public List<Score> getScores() {
+        return scoreService.computeAndGetScores();
+    }
+
+    public List<Score> getWinners() {
+        return scoreService.computeAndGetWinners();
     }
 }
