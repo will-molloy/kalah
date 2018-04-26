@@ -2,17 +2,18 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
-import kalah.model.MoveOutcome;
-import kalah.service.Game;
+import kalah.service.MoveOutcome;
+import kalah.service.GameService;
 import kalah.view.AsciiObserver;
 import kalah.view.KalahObserver;
 
-import static kalah.model.MoveOutcome.EMPTY_HOUSE;
-import static kalah.model.MoveOutcome.GAME_OVER;
+import static kalah.service.MoveOutcome.INVALID_EMPTY_HOUSE;
+import static kalah.service.MoveOutcome.GAME_OVER;
 
 /**
- * This class is the starting point for a Kalah implementation using
- * the test infrastructure.
+ * This class is the starting point for a Kalah implementation using the test infrastructure.
+ *
+ * Represents the Kalah entry point and controller. Wires the game and view. Notifies the view of game updates.
  */
 public class Kalah {
 
@@ -20,9 +21,8 @@ public class Kalah {
         new Kalah().play(new MockIO());
     }
 
-    // MVC!
     public void play(IO io) {
-        Game game = new Game(6, 4, 2);
+        GameService game = new GameService(6, 4, 2);
         KalahObserver observer = new AsciiObserver(game, io);
         while (true) {
             String input = observer.nextMove();
@@ -30,10 +30,11 @@ public class Kalah {
                 observer.gameQuit();
                 break;
             } else {
-                MoveOutcome outcome = game.move(Integer.parseInt(input));
-                if (outcome.equals(EMPTY_HOUSE)) {
+                MoveOutcome outcome = game.validateAndMakeMove(Integer.parseInt(input));
+                if (outcome.equals(INVALID_EMPTY_HOUSE)) {
                     observer.emptyHouse();
-                } else if (outcome.equals(GAME_OVER)) {
+                }
+                if (outcome.equals(GAME_OVER)) {
                     observer.gameOver();
                     break;
                 }

@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a Kalah board. Contains methods for retrieving board information and pieces. Once initialised the board
+ * cannot be modified; only the individual pieces can.
+ */
 public class Board {
 
     private final int numHouses;
-
-    private final int numInitialSeeds;
 
     private final int numPlayers;
 
@@ -19,9 +21,12 @@ public class Board {
     // Player Number -> Store
     private final Map<Integer, Store> storeMap;
 
+    /**
+     * Initialises and stores board pieces into maps for efficient look ups and connects the pieces by initialising
+     * their next and opposite pieces.
+     */
     public Board(int numHouses, int numInitialSeeds, int numPlayers) {
         this.numHouses = numHouses;
-        this.numInitialSeeds = numInitialSeeds;
         this.numPlayers = numPlayers;
         housesMap = new HashMap<>();
         storeMap = new HashMap<>();
@@ -38,20 +43,21 @@ public class Board {
 
     /**
      * Connects each pieces next piece and opposite piece.
-     * Next piece: in player order: houses -> store -> next players houses, and so on (wraps around).
-     * Opposite piece: house with number N -> next players house with number (num_houses + 1 - N).
-     * For stores the opposite piece is set to the next store (wraps around).
+     * - Next piece: in player order: houses -> store -> next players houses, and so on (wraps around).
+     * - Opposite piece: house with number (N) -> next players house with number (num_houses + 1 - N).
+     * For stores the opposite piece is set to the next players store (wraps around).
      */
     private void connectPieces() {
         for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
-            Map<Integer, House> houses = housesMap.get(playerNum);
             for (int houseNum = 1; houseNum <= numHouses; houseNum++) {
                 if (houseNum == numHouses) {
-                    houses.get(numHouses).initNextPiece(getStore(playerNum));
+                    housesMap.get(playerNum).get(houseNum).initNextPiece(getStore(playerNum));
                 } else {
-                    houses.get(houseNum).initNextPiece(getHouse(houseNum + 1, playerNum));
+                    housesMap.get(playerNum).get(houseNum)
+                            .initNextPiece(getHouse(houseNum + 1, playerNum));
                 }
-                houses.get(houseNum).initOppositePiece(getHouse(numHouses + 1 - houseNum, nextPlayer(playerNum)));
+                housesMap.get(playerNum).get(houseNum)
+                        .initOppositePiece(getHouse(numHouses + 1 - houseNum, nextPlayer(playerNum)));
             }
             storeMap.get(playerNum).initNextPiece(getHouse(1, nextPlayer(playerNum)));
             storeMap.get(playerNum).initOppositePiece(getStore(nextPlayer(playerNum)));
@@ -92,15 +98,4 @@ public class Board {
         return true;
     }
 
-    public int numSeeds() {
-        return numPlayers * numHouses * numInitialSeeds;
-    }
-
-    public int maxHouseNumber() {
-        return numHouses;
-    }
-
-    public int getNumPlayers() {
-        return numPlayers;
-    }
 }

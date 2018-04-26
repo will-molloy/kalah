@@ -1,5 +1,8 @@
 package kalah.util;
 
+/**
+ * Contains utility methods for formatting strings.
+ */
 public class StringFormatter {
 
     public static String repeatString(String value, int times) {

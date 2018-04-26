@@ -1,5 +1,9 @@
 package kalah.model;
 
+/**
+ * Represents a board piece. Pieces can be sowed; hence a piece is stateful of their seed count. Pieces are connected
+ * on the board; hence Pieces are stateful of their next and opposite pieces which can only be set once.
+ */
 public abstract class Piece {
 
     final int playerNumber;
@@ -35,6 +39,9 @@ public abstract class Piece {
         return nextPiece;
     }
 
+    /**
+     * Template method which first checks this piece can be sowed by the player before proceeding.
+     */
     public final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
         if (canSow(playerNumber)) {
             seedCount += amount;

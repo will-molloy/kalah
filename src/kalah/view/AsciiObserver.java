@@ -1,12 +1,11 @@
 package kalah.view;
 
 import com.qualitascorpus.testsupport.IO;
-import kalah.model.Board;
 import kalah.model.House;
 import kalah.model.Score;
 import kalah.model.Store;
-import kalah.service.Game;
-import kalah.service.Scorer;
+import kalah.service.GameService;
+import kalah.service.ScoreService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +16,9 @@ import static kalah.util.MathUtil.getDigitLength;
 import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
+/**
+ * Ascii implementation of a Kalah Observer.
+ */
 public class AsciiObserver implements KalahObserver {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
@@ -29,9 +31,7 @@ public class AsciiObserver implements KalahObserver {
     private static final char CORNER_SYMBOL = '+';
     private static final char GAP_SYMBOL = ' ';
 
-    private final Board board;
-
-    private final Game game;
+    private final GameService game;
 
     private final IO io;
 
@@ -39,12 +39,11 @@ public class AsciiObserver implements KalahObserver {
 
     private final int maxHouseNumberLength;
 
-    public AsciiObserver(Game game, IO io) {
+    public AsciiObserver(GameService game, IO io) {
         this.game = game;
-        this.board = game.getBoard();
         this.io = io;
-        maxSeedCountLength = getDigitLength(board.numSeeds());
-        maxHouseNumberLength = getDigitLength(board.maxHouseNumber());
+        maxSeedCountLength = getDigitLength(game.totalNumSeeds());
+        maxHouseNumberLength = getDigitLength(game.maxHouseNumber());
     }
 
     @Override
@@ -72,22 +71,22 @@ public class AsciiObserver implements KalahObserver {
         printScores();
     }
 
-    private String printPrompt() {
-        return io.readFromKeyboard("Player " + PLAYER_SYMBOL + game.getCurrentTurnsPlayer() +
-                "'s turn - Specify house number or 'q' to quit: ");
+    private void printBoard() {
+        io.println(boardTopAndBottomLine());
+        printPlayerPieces();
+        io.println(boardTopAndBottomLine());
     }
 
-    private void printBoard() {
-        io.println(boardOuter());
-        printPlayerPieces();
-        io.println(boardOuter());
+    private String printPrompt() {
+        return io.readFromKeyboard("Player " + PLAYER_SYMBOL + game.currentTurnsPlayer() +
+                "'s turn - Specify house number or 'q' to quit: ");
     }
 
     private void printPlayerPieces() {
         boolean reverse = true;
-        for (int i = board.getNumPlayers(); i > 0; i--) {
-            List<House> houses = board.getHouses(i);
-            Store store = board.getStore((i % board.getNumPlayers()) + 1);
+        for (int i = game.numPlayers(); i > 0; i--) {
+            List<House> houses = game.board().getHouses(i);
+            Store store = game.board().getStore((i % game.numPlayers()) + 1);
             if (reverse) {
                 io.println(reverseHouseOrder(houses, store, i));
             } else {
@@ -95,7 +94,7 @@ public class AsciiObserver implements KalahObserver {
             }
             reverse = !reverse;
             if (i > 1) {
-                io.println(boardMiddle());
+                io.println(boardMiddleLine());
             }
         }
     }
@@ -114,31 +113,31 @@ public class AsciiObserver implements KalahObserver {
                 formatPlayerNumber(playerNumber);
     }
 
-    private String boardOuter() {
-        return outerDash() +
-                centerDash() +
-                outerDash();
+    private String boardTopAndBottomLine() {
+        return boardTopAndBottomOuter() +
+                boardInner() +
+                boardTopAndBottomOuter();
     }
 
-    private String outerDash() {
+    private String boardTopAndBottomOuter() {
         return CORNER_SYMBOL +
                 repeatString(valueOf(HORIZONTAL_SYMBOL), maxSeedCountLength + ADDITIONAL_CHARACTERS_PER_STORE) +
                 CORNER_SYMBOL;
     }
 
-    private String centerDash() {
+    private String boardInner() {
         StringBuilder builder = new StringBuilder();
         String houseDash = repeatString(valueOf(HORIZONTAL_SYMBOL),
                 maxSeedCountLength + maxHouseNumberLength + ADDITIONAL_CHARACTERS_PER_HOUSE) +
                 CORNER_SYMBOL;
-        return builder.append(repeatString(houseDash, 6))
+        return builder.append(repeatString(houseDash, game.maxHouseNumber()))
                 .deleteCharAt(builder.length() - 1)
                 .toString();
     }
 
     private String formatPlayerNumber(int playerNumber) {
         return VERTICAL_SYMBOL +
-                repeatString(valueOf(GAP_SYMBOL), maxSeedCountLength - 1) + // -1; PLAYER_SYMBOL takes a space
+                repeatString(valueOf(GAP_SYMBOL), maxSeedCountLength - 1) + // -1; PLAYER_SYMBOL takes a slot
                 PLAYER_SYMBOL +
                 playerNumber +
                 GAP_SYMBOL + VERTICAL_SYMBOL;
@@ -167,13 +166,13 @@ public class AsciiObserver implements KalahObserver {
                 GAP_SYMBOL + VERTICAL_SYMBOL;
     }
 
-    private String boardMiddle() {
-        return middleOuter() +
-                centerDash() +
-                middleOuter();
+    private String boardMiddleLine() {
+        return boardMiddleOuter() +
+                boardInner() +
+                boardMiddleOuter();
     }
 
-    private String middleOuter() {
+    private String boardMiddleOuter() {
         return VERTICAL_SYMBOL +
                 repeatString(valueOf(GAP_SYMBOL), maxSeedCountLength + ADDITIONAL_CHARACTERS_PER_STORE) +
                 VERTICAL_SYMBOL;
@@ -188,11 +187,11 @@ public class AsciiObserver implements KalahObserver {
     }
 
     private void printScores() {
-        Scorer scorer = new Scorer(board);
-        for (Score s : scorer.getScores()) {
+        ScoreService scoreService = new ScoreService(game.board(), game.numPlayers());
+        for (Score s : scoreService.getScores()) {
             io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
         }
-        List<Score> winners = scorer.getWinners();
+        List<Score> winners = scoreService.getWinners();
         if (winners.size() > 1) {
             io.println("A tie!");
         } else {
