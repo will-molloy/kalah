@@ -1,7 +1,7 @@
 package kalah.model;
 
 /**
- * Represents a comparable Kalah score.
+ * Represents a comparable Kalah getScore.
  */
 public class Score implements Comparable<Score> {
 

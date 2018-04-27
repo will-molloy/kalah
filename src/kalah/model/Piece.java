@@ -71,4 +71,5 @@ public abstract class Piece {
         return amountRemoved;
     }
 
+    public abstract boolean getsRepeatTurn(int playerNumber);
 }

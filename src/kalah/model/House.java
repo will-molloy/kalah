@@ -21,6 +21,11 @@ public class House extends Piece {
     }
 
     @Override
+    public boolean getsRepeatTurn(int playerNumber) {
+        return false;
+    }
+
+    @Override
     boolean canCapture(int playerNumber) {
         return playerNumber == this.playerNumber && seedCount == 1 && !oppositePiece.isEmpty();
     }

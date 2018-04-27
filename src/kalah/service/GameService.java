@@ -45,16 +45,15 @@ public class GameService {
 
     /**
      * If valid, retrieves the given house for the current turns player and sows the board and then determines if the
-     * next player should get a turn (they do if the last piece sowed was a house, otherwise the current player gets
-     * a repeat turn). Returns the outcome of the move.
+     * player should get a repeat turn based on the last piece sowed. Returns the outcome of the move.
      */
     public MoveOutcome validateAndMakeMove(int houseNumber) {
         MoveOutcome outcome = validateMove(houseNumber);
         if (!outcome.equals(VALID)) {
             return outcome;
         }
-        Piece endingPiece = board.sow(houseNumber, currentTurnsPlayer);
-        if (endingPiece instanceof House) {
+        Piece lastPieceSowed = board.sow(houseNumber, currentTurnsPlayer);
+        if (!lastPieceSowed.getsRepeatTurn(currentTurnsPlayer)) {
             currentTurnsPlayer = board.nextPlayer(currentTurnsPlayer);
         }
         return validateBoard();
@@ -92,8 +91,8 @@ public class GameService {
         return board.getHouses(playerNumber);
     }
 
-    public List<Score> getScores() {
-        return scoreService.computeAndGetScores();
+    public Score getScore(int playerNum) {
+        return scoreService.getScore(playerNum);
     }
 
     public List<Score> getWinners() {
