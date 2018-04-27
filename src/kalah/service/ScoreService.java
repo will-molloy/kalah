@@ -21,16 +21,7 @@ public class ScoreService {
         this.numPlayers = numPlayers;
     }
 
-    List<Score> computeAndGetScores() {
-        List<Score> scores = new ArrayList<>();
-        for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
-            Score score = score(playerNum);
-            scores.add(score);
-        }
-        return scores;
-    }
-
-    private Score score(int playerNumber) {
+    public Score getScore(int playerNumber) {
         int total = 0;
         for (House h : board.getHouses(playerNumber)) {
             total += h.seedCount();
@@ -42,7 +33,7 @@ public class ScoreService {
     List<Score> computeAndGetWinners() {
         List<Score> winners = new ArrayList<>();
         winners.add(new Score(-1, -1));
-        for (Score score : computeAndGetScores()) {
+        for (Score score : getScores()) {
             if (score.isGreaterThanOrEquals(winners.get(0))) {
                 if (score.isGreaterThan(winners.get(0))) {
                     winners = new ArrayList<>();
@@ -51,6 +42,15 @@ public class ScoreService {
             }
         }
         return winners;
+    }
+
+    private List<Score> getScores() {
+        List<Score> scores = new ArrayList<>();
+        for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
+            Score score = getScore(playerNum);
+            scores.add(score);
+        }
+        return scores;
     }
 
 }

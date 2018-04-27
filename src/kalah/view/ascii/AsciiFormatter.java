@@ -1,24 +1,19 @@
-package kalah.view;
+package kalah.view.ascii;
 
-import com.qualitascorpus.testsupport.IO;
 import kalah.model.House;
 import kalah.model.Score;
 import kalah.model.Store;
-import kalah.service.GameService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.valueOf;
-import static kalah.util.MathUtil.getDigitLength;
+import static kalah.util.MathUtil.isSamePolarity;
 import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
-/**
- * Ascii implementation of a Kalah Observer.
- */
-public class AsciiObserver implements KalahObserver {
+public class AsciiFormatter {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
     private static final int ADDITIONAL_CHARACTERS_PER_STORE = 2; // i.e. " 10 ". Two additional spaces.
@@ -30,72 +25,18 @@ public class AsciiObserver implements KalahObserver {
     private static final char CORNER_SYMBOL = '+';
     private static final char GAP_SYMBOL = ' ';
 
-    private final GameService game;
-
-    private final IO io;
-
     private final int maxSeedCountLength;
 
     private final int maxHouseNumberLength;
 
-    public AsciiObserver(GameService game, IO io) {
-        this.game = game;
-        this.io = io;
-        maxSeedCountLength = getDigitLength(game.totalNumSeeds());
-        maxHouseNumberLength = getDigitLength(game.maxHouseNumber());
+    AsciiFormatter(int maxSeedCountLength, int maxHouseNumberLength) {
+        this.maxSeedCountLength = maxSeedCountLength;
+        this.maxHouseNumberLength = maxHouseNumberLength;
     }
 
-    @Override
-    public String nextMove() {
-        printBoard();
-        return printPrompt();
-    }
-
-    @Override
-    public void emptyHouse() {
-        printEmptyHouse();
-    }
-
-    @Override
-    public void gameQuit() {
-        printGameOver();
-        printBoard();
-    }
-
-    @Override
-    public void gameOver() {
-        printBoard();
-        printGameOver();
-        printBoard();
-        printScores();
-    }
-
-    private void printBoard() {
-        io.println(boardTopAndBottomLine());
-        printPlayerPieces();
-        io.println(boardTopAndBottomLine());
-    }
-
-    private String printPrompt() {
-        return io.readFromKeyboard("Player " + PLAYER_SYMBOL + game.currentTurnsPlayer() +
-                "'s turn - Specify house number or 'q' to quit: ");
-    }
-
-    private void printPlayerPieces() {
-        boolean reverse = true;
-        for (int i = game.numPlayers(); i > 0; i--) {
-            List<House> houses = game.getHouses(i);
-            Store store = game.getStore((i % game.numPlayers()) + 1);
-            if (reverse) {
-                io.println(reverseHouseOrder(houses, store, i));
-            } else {
-                io.println(forwardHouseOrder(houses, store, i));
-            }
-            reverse = !reverse;
-            if (i > 1) {
-                io.println(boardMiddleLine());
-            }
-        }
+    String playersPieces(int playerNum, int numPlayers, List<House> houses, Store store) {
+        return isSamePolarity(playerNum, numPlayers) ? reverseHouseOrder(houses, store, playerNum) :
+                forwardHouseOrder(houses, store, playerNum);
     }
 
     private String reverseHouseOrder(List<House> houses, Store store, int playerNumber) {
@@ -112,9 +53,9 @@ public class AsciiObserver implements KalahObserver {
                 formatPlayerNumber(playerNumber);
     }
 
-    private String boardTopAndBottomLine() {
+    String boardTopAndBottomLine(int numHouses) {
         return boardTopAndBottomOuter() +
-                boardInner() +
+                boardInner(numHouses) +
                 boardTopAndBottomOuter();
     }
 
@@ -124,12 +65,12 @@ public class AsciiObserver implements KalahObserver {
                 CORNER_SYMBOL;
     }
 
-    private String boardInner() {
+    private String boardInner(int numHouses) {
         StringBuilder builder = new StringBuilder();
         String houseDash = repeatString(valueOf(HORIZONTAL_SYMBOL),
                 maxSeedCountLength + maxHouseNumberLength + ADDITIONAL_CHARACTERS_PER_HOUSE) +
                 CORNER_SYMBOL;
-        return builder.append(repeatString(houseDash, game.maxHouseNumber()))
+        return builder.append(repeatString(houseDash, numHouses))
                 .deleteCharAt(builder.length() - 1)
                 .toString();
     }
@@ -165,9 +106,9 @@ public class AsciiObserver implements KalahObserver {
                 GAP_SYMBOL + VERTICAL_SYMBOL;
     }
 
-    private String boardMiddleLine() {
+    String boardMiddleLine(int numHouses) {
         return boardMiddleOuter() +
-                boardInner() +
+                boardInner(numHouses) +
                 boardMiddleOuter();
     }
 
@@ -177,24 +118,26 @@ public class AsciiObserver implements KalahObserver {
                 VERTICAL_SYMBOL;
     }
 
-    private void printGameOver() {
-        io.println("Game over");
+    String nextMovePrompt(int playersTurn) {
+        return "Player " +
+                PLAYER_SYMBOL +
+                playersTurn +
+                "'s turn - Specify house number or 'q' to quit: ";
     }
 
-    private void printEmptyHouse() {
-        io.println("House is empty. Move again.");
+    String score(Score score) {
+        return "\tplayer " + score.getPlayerNumber() + ":" + score.getScore();
     }
 
-    private void printScores() {
-        for (Score s : game.getScores()) {
-            io.println("\tplayer " + s.getPlayerNumber() + ":" + s.getScore());
-        }
-        List<Score> winners = game.getWinners();
-        if (winners.size() > 1) {
-            io.println("A tie!");
-        } else {
-            io.println("Player " + winners.get(0).getPlayerNumber() + " wins!");
-        }
+    String winners(List<Score> winners) {
+        return winners.size() > 1 ? "A tie!" : "Player " + winners.get(0).getPlayerNumber() + " wins!";
     }
 
+    String gameOver() {
+        return "Game over";
+    }
+
+    String invalidEmptyHouse() {
+        return "House is empty. Move again.";
+    }
 }

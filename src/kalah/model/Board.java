@@ -53,12 +53,12 @@ public class Board {
                     housesMap.get(playerNum).get(houseNum).initNextPiece(getStore(playerNum));
                 } else {
                     housesMap.get(playerNum).get(houseNum)
-                            .initNextPiece(getHouse(houseNum + 1, playerNum));
+                            .initNextPiece(housesMap.get(playerNum).get(houseNum + 1));
                 }
                 housesMap.get(playerNum).get(houseNum)
-                        .initOppositePiece(getHouse(numHouses + 1 - houseNum, nextPlayer(playerNum)));
+                        .initOppositePiece(housesMap.get(nextPlayer(playerNum)).get(numHouses + 1 - houseNum));
             }
-            storeMap.get(playerNum).initNextPiece(getHouse(1, nextPlayer(playerNum)));
+            storeMap.get(playerNum).initNextPiece(housesMap.get(nextPlayer(playerNum)).get(1));
             storeMap.get(playerNum).initOppositePiece(getStore(nextPlayer(playerNum)));
         }
     }
@@ -68,7 +68,7 @@ public class Board {
      * seeds one by one to the next pieces. The last piece sowed is captured if possible. Returns the last piece sowed.
      */
     public Piece sow(int houseNumber, int playerNumber) {
-        Piece piece = getHouse(houseNumber, playerNumber);
+        Piece piece = housesMap.get(playerNumber).get(houseNumber);
         int seedsToSow = piece.getCountAndRemoveSeeds();
         while (seedsToSow > 0) {
             piece = piece.next();
@@ -79,10 +79,6 @@ public class Board {
             getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
         }
         return piece;
-    }
-
-    private House getHouse(int houseNumber, int playerNumber) {
-        return housesMap.get(playerNumber).get(houseNumber);
     }
 
     public Store getStore(int playerNumber) {
@@ -103,7 +99,7 @@ public class Board {
     }
 
     public boolean houseIsEmpty(int houseNumber, int playerNumber) {
-        return getHouse(houseNumber, playerNumber).isEmpty();
+        return housesMap.get(playerNumber).get(houseNumber).isEmpty();
     }
 
     public boolean housesAreEmpty(int playerNumber) {

@@ -4,8 +4,8 @@ import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
 import kalah.service.GameService;
 import kalah.service.MoveOutcome;
-import kalah.view.AsciiObserver;
 import kalah.view.KalahObserver;
+import kalah.view.ascii.AsciiObserver;
 
 import static kalah.service.MoveOutcome.GAME_OVER;
 import static kalah.service.MoveOutcome.INVALID_EMPTY_HOUSE;

@@ -17,6 +17,11 @@ public class Store extends Piece {
         return playerNumber == this.playerNumber;
     }
 
+    @Override
+    public boolean getsRepeatTurn(int playerNumber) {
+        return playerNumber == this.playerNumber;
+    }
+
     /**
      * A store piece cannot be captured.
      */
