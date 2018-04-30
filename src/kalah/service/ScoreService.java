@@ -8,17 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper service, scores the Kalah board.
+ * Scores a Kalah board.
  */
 public class ScoreService {
 
     private final Board board;
 
-    private final int numPlayers;
-
-    ScoreService(Board board, int numPlayers) {
+    ScoreService(Board board) {
         this.board = board;
-        this.numPlayers = numPlayers;
     }
 
     public Score getScore(int playerNumber) {
@@ -46,7 +43,7 @@ public class ScoreService {
 
     private List<Score> getScores() {
         List<Score> scores = new ArrayList<>();
-        for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
+        for (int playerNum = 1; playerNum <= board.getNumPlayers(); playerNum++) {
             Score score = getScore(playerNum);
             scores.add(score);
         }

@@ -22,9 +22,9 @@ public class AsciiObserver implements KalahObserver {
     private final IO io;
 
     public AsciiObserver(GameService game, IO io) {
-        asciiFormatter = new AsciiFormatter(getDigitLength(game.totalNumSeeds()), getDigitLength(game.maxHouseNumber()));
         this.game = game;
         this.io = io;
+        asciiFormatter = new AsciiFormatter(getDigitLength(game.totalNumSeeds()), getDigitLength(game.maxHouseNumber()));
     }
 
     @Override
