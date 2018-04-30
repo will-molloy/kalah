@@ -65,16 +65,16 @@ public class AsciiObserver implements KalahObserver {
 
     private void printPlayersWithSeparator() {
         for (int i = game.numPlayers(); i > 1; i--) {
-            printPlayersPieces(i);
+            printPlayersPits(i);
             io.println(asciiStringFormatter.boardMiddleLine(game.maxHouseNumber()));
         }
-        printPlayersPieces(1);
+        printPlayersPits(1);
     }
 
-    private void printPlayersPieces(int playerNum) {
+    private void printPlayersPits(int playerNum) {
         List<House> houses = game.getHouses(playerNum);
         Store store = game.getStore((playerNum % game.numPlayers()) + 1);
-        io.println(asciiStringFormatter.playersPieces(playerNum, game.numPlayers(), houses, store));
+        io.println(asciiStringFormatter.playersPits(playerNum, game.numPlayers(), houses, store));
     }
 
     private String printPrompt() {

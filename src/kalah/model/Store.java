@@ -1,16 +1,16 @@
 package kalah.model;
 
 /**
- * Represents a Store board piece.
+ * Represents a Store board pit.
  */
-public class Store extends Piece {
+public class Store extends Pit {
 
     Store(int playerNumber, int seedCount) {
         super(playerNumber, seedCount);
     }
 
     /**
-     * A store piece can only be sowed the by player that owns it.
+     * A store pit can only be sowed the by player that owns it.
      */
     @Override
     boolean canSow(int playerNumber) {
@@ -23,7 +23,7 @@ public class Store extends Piece {
     }
 
     /**
-     * A store piece cannot be captured.
+     * A store pit cannot be captured.
      */
     @Override
     boolean canCapture(int playerNumber) {

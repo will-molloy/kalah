@@ -1,9 +1,9 @@
 package kalah.model;
 
 /**
- * Represents a House board piece.
+ * Represents a House board pit.
  */
-public class House extends Piece {
+public class House extends Pit {
 
     private final int houseNumber;
 
@@ -27,7 +27,7 @@ public class House extends Piece {
 
     @Override
     boolean canCapture(int playerNumber) {
-        return playerNumber == this.playerNumber && seedCount == 1 && !oppositePiece.isEmpty();
+        return playerNumber == this.playerNumber && seedCount == 1 && !oppositePit.isEmpty();
     }
 
     /**
@@ -35,7 +35,7 @@ public class House extends Piece {
      */
     @Override
     int capture() {
-        return getCountAndRemoveSeeds() + oppositePiece.getCountAndRemoveSeeds();
+        return getCountAndRemoveSeeds() + oppositePit.getCountAndRemoveSeeds();
     }
 
     public int getHouseNumber() {

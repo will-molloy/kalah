@@ -12,10 +12,10 @@ public abstract class BoardFactory {
     }
 
     public final Board connectAndGetBoard() {
-        connectBoardPieces();
+        connectBoardPits();
         return board;
     }
 
-    abstract void connectBoardPieces();
+    abstract void connectBoardPits();
 
 }

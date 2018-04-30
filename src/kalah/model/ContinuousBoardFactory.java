@@ -1,7 +1,7 @@
 package kalah.model;
 
 /**
- * A continuous board factory constructs a board such that pieces are linked in numerical order.
+ * A continuous board factory constructs a board such that pits are linked in numerical order.
  */
 public class ContinuousBoardFactory extends BoardFactory {
 
@@ -16,26 +16,26 @@ public class ContinuousBoardFactory extends BoardFactory {
     }
 
     /**
-     * Connects each pieces next piece and opposite piece.
-     * - Next piece: in player order: houses -> store -> next players houses, and so on (wraps around).
-     * - Opposite piece: house with number (N) -> next players house with number (num_houses + 1 - N).
-     * For stores the opposite piece is set to the next players store (wraps around).
+     * Connects each pits next pit and opposite pit.
+     * - Next pit: in player order: houses -> store -> next players houses, and so on (wraps around).
+     * - Opposite pit: house with number (N) -> next players house with number (num_houses + 1 - N).
+     * For stores the opposite pit is set to the next players store (wraps around).
      */
     @Override
-    void connectBoardPieces() {
+    void connectBoardPits() {
         for (int playerNumber = 1; playerNumber <= numPlayers; playerNumber++) {
             for (int houseNumber = 1; houseNumber <= numHouses; houseNumber++) {
                 if (houseNumber == numHouses) {
-                    board.getHouse(playerNumber, houseNumber).initNextPiece(board.getStore(playerNumber));
+                    board.getHouse(playerNumber, houseNumber).initNextPit(board.getStore(playerNumber));
                 } else {
                     board.getHouse(playerNumber, houseNumber)
-                            .initNextPiece(board.getHouse(playerNumber, houseNumber + 1));
+                            .initNextPit(board.getHouse(playerNumber, houseNumber + 1));
                 }
                 board.getHouse(playerNumber, houseNumber)
-                        .initOppositePiece(board.getHouse(board.nextPlayer(playerNumber), numHouses + 1 - houseNumber));
+                        .initOppositePit(board.getHouse(board.nextPlayer(playerNumber), numHouses + 1 - houseNumber));
             }
-            board.getStore(playerNumber).initNextPiece(board.getHouse(board.nextPlayer(playerNumber), 1));
-            board.getStore(playerNumber).initOppositePiece(board.getStore(board.nextPlayer(playerNumber)));
+            board.getStore(playerNumber).initNextPit(board.getHouse(board.nextPlayer(playerNumber), 1));
+            board.getStore(playerNumber).initOppositePit(board.getStore(board.nextPlayer(playerNumber)));
         }
     }
 

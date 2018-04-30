@@ -37,7 +37,7 @@ public class AsciiStringFormatter {
         this.maxHouseNumberLength = maxHouseNumberLength;
     }
 
-    String playersPieces(int playerNum, int numPlayers, List<House> houses, Store store) {
+    String playersPits(int playerNum, int numPlayers, List<House> houses, Store store) {
         return isSameParity(playerNum, numPlayers) ? reverseHouseOrder(houses, store, playerNum) :
                 forwardHouseOrder(houses, store, playerNum);
     }

@@ -1,20 +1,20 @@
 package kalah.model;
 
 /**
- * Represents a board piece. Pieces can be sowed; hence a piece is stateful of their seed count. Pieces are connected
- * on the board; hence Pieces are stateful of their next and opposite pieces which can only be set once.
+ * Represents a board pit. Pits can be sowed; hence a pit is stateful of their seed count. Pits are connected
+ * on a board; hence pits are stateful of their next and opposite pits which can only be set once.
  */
-public abstract class Piece {
+public abstract class Pit {
 
     final int playerNumber;
 
     int seedCount;
 
-    Piece oppositePiece;
+    Pit oppositePit;
 
-    private Piece nextPiece;
+    private Pit nextPit;
 
-    Piece(int playerNumber, int seedCount) {
+    Pit(int playerNumber, int seedCount) {
         this.playerNumber = playerNumber;
         this.seedCount = seedCount;
     }
@@ -23,24 +23,24 @@ public abstract class Piece {
 
     abstract int capture();
 
-    final void initNextPiece(Piece piece) {
-        if (this.nextPiece == null) {
-            this.nextPiece = piece;
+    final void initNextPit(Pit pit) {
+        if (this.nextPit == null) {
+            this.nextPit = pit;
         }
     }
 
-    final void initOppositePiece(Piece piece) {
-        if (this.oppositePiece == null) {
-            this.oppositePiece = piece;
+    final void initOppositePit(Pit pit) {
+        if (this.oppositePit == null) {
+            this.oppositePit = pit;
         }
     }
 
-    final Piece next() {
-        return nextPiece;
+    final Pit next() {
+        return nextPit;
     }
 
     /**
-     * Template method which first checks this piece can be sowed by the player before proceeding.
+     * Template method which first checks this pit can be sowed by the player before proceeding.
      */
     final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
         if (canSow(playerNumber)) {

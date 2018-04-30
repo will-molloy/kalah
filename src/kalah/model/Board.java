@@ -25,7 +25,7 @@ public class Board {
     private final Map<Integer, Store> storeMap;
 
     /**
-     * Initialises and stores board pieces into maps for efficient look ups.
+     * Initialises and stores board pits into maps for efficient look ups.
      */
     Board(int numHouses, int numInitialSeeds, int numPlayers) {
         if (numHouses < 1 || numInitialSeeds < 1 || numPlayers < 2) {
@@ -48,21 +48,21 @@ public class Board {
     }
 
     /**
-     * Sows the board starting from the given piece; this consists of removing seeds from the starting piece and adding
-     * seeds one by one to the next pieces. The last piece sowed is captured if possible. Returns the last piece sowed.
+     * Sows the board starting from the given pit; this consists of removing seeds from the starting pit and adding
+     * seeds one by one to the next pits. The last pit sowed is captured if possible. Returns the last pit sowed.
      */
-    public Piece sow(int houseNumber, int playerNumber) {
-        Piece piece = getHouse(playerNumber, houseNumber);
-        int seedsToSow = piece.getCountAndRemoveSeeds();
+    public Pit sow(int houseNumber, int playerNumber) {
+        Pit pit = getHouse(playerNumber, houseNumber);
+        int seedsToSow = pit.getCountAndRemoveSeeds();
         while (seedsToSow > 0) {
-            piece = piece.next();
-            seedsToSow -= piece.sowSeedIfPlayerCan(playerNumber);
+            pit = pit.next();
+            seedsToSow -= pit.sowSeedIfPlayerCan(playerNumber);
         }
-        if (piece.canCapture(playerNumber)) {
-            int seedsCaptured = piece.capture();
+        if (pit.canCapture(playerNumber)) {
+            int seedsCaptured = pit.capture();
             getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
         }
-        return piece;
+        return pit;
     }
 
     public House getHouse(int playerNumber, int houseNumber) {

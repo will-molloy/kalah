@@ -30,8 +30,8 @@ public class GameService {
         if (!outcome.equals(VALID)) {
             return outcome;
         }
-        Piece lastPieceSowed = board.sow(houseNumber, currentTurnsPlayer);
-        if (!lastPieceSowed.getsRepeatTurn(currentTurnsPlayer)) {
+        Pit lastPitSowed = board.sow(houseNumber, currentTurnsPlayer);
+        if (!lastPitSowed.getsRepeatTurn(currentTurnsPlayer)) {
             currentTurnsPlayer = board.nextPlayer(currentTurnsPlayer);
         }
         return validateBoard();
