@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.valueOf;
-import static kalah.util.MathUtil.isSamePolarity;
+import static kalah.util.MathUtil.isSameParity;
 import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
@@ -35,7 +35,7 @@ public class AsciiFormatter {
     }
 
     String playersPieces(int playerNum, int numPlayers, List<House> houses, Store store) {
-        return isSamePolarity(playerNum, numPlayers) ? reverseHouseOrder(houses, store, playerNum) :
+        return isSameParity(playerNum, numPlayers) ? reverseHouseOrder(houses, store, playerNum) :
                 forwardHouseOrder(houses, store, playerNum);
     }
 
