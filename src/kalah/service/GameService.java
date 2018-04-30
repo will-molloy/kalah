@@ -1,6 +1,5 @@
 package kalah.service;
 
-import kalah.error.KalahException;
 import kalah.model.*;
 
 import java.util.List;
@@ -18,28 +17,15 @@ public class GameService {
 
     private final ScoreService scoreService;
 
-    private final int numHouses;
-
-    private final int numInitialSeeds;
-
-    private final int numPlayers;
-
     private int currentTurnsPlayer;
 
     /**
      * Initialises a game of Kalah. Throws KalahException if there aren't enough houses, seeds, or players. Player 1
      * will move first.
      */
-    public GameService(int numHouses, int numInitialSeeds, int numPlayers) {
-        this.numHouses = numHouses;
-        this.numInitialSeeds = numInitialSeeds;
-        this.numPlayers = numPlayers;
-        if (numHouses < 1 || numInitialSeeds < 1 || numPlayers < 2) {
-            throw new KalahException(String.format(("Not enough houses (%d), seeds (%d), or players (%d)."),
-                    numHouses, numInitialSeeds, numPlayers));
-        }
-        this.board = new Board(numHouses, numInitialSeeds, numPlayers);
-        this.scoreService = new ScoreService(board, numPlayers);
+    public GameService(Board board) {
+        this.board = board;
+        this.scoreService = new ScoreService(board);
         currentTurnsPlayer = 1;
     }
 
@@ -72,15 +58,15 @@ public class GameService {
     }
 
     public int totalNumSeeds() {
-        return numHouses * numInitialSeeds * numPlayers;
+        return board.getNumPlayers() * board.getNumInitialSeeds() * board.getNumHouses();
     }
 
     public int maxHouseNumber() {
-        return numHouses;
+        return board.getNumHouses();
     }
 
     public int numPlayers() {
-        return numPlayers;
+        return board.getNumPlayers();
     }
 
     public Store getStore(int playerNumber) {

@@ -12,4 +12,5 @@ public class MathUtil {
     public static boolean isSameParity(int a, int b) {
         return (a & 1) == (b & 1);
     }
+
 }

@@ -2,6 +2,7 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
+import kalah.model.ContinuousBoardFactory;
 import kalah.service.GameService;
 import kalah.service.MoveOutcome;
 import kalah.view.KalahObserver;
@@ -21,7 +22,7 @@ public class Kalah {
     }
 
     public void play(IO io) {
-        GameService game = new GameService(6, 4, 2);
+        GameService game = new GameService(new ContinuousBoardFactory(6, 4, 2).connectAndGetBoard());
         KalahObserver observer = new AsciiObserver(game, io);
         while (true) {
             String input = observer.nextMove();
@@ -40,4 +41,5 @@ public class Kalah {
             }
         }
     }
+
 }
