@@ -47,20 +47,28 @@ public class Board {
      * For stores the opposite piece is set to the next players store (wraps around).
      */
     private void connectPieces() {
-        for (int playerNum = 1; playerNum <= numPlayers; playerNum++) {
-            for (int houseNum = 1; houseNum <= numHouses; houseNum++) {
-                if (houseNum == numHouses) {
-                    housesMap.get(playerNum).get(houseNum).initNextPiece(getStore(playerNum));
+        for (int playerNumber = 1; playerNumber <= numPlayers; playerNumber++) {
+            for (int houseNumber = 1; houseNumber <= numHouses; houseNumber++) {
+                if (houseNumber == numHouses) {
+                    getHouse(playerNumber, houseNumber).initNextPiece(getStore(playerNumber));
                 } else {
-                    housesMap.get(playerNum).get(houseNum)
-                            .initNextPiece(housesMap.get(playerNum).get(houseNum + 1));
+                    getHouse(playerNumber, houseNumber)
+                            .initNextPiece(getHouse(playerNumber, houseNumber + 1));
                 }
-                housesMap.get(playerNum).get(houseNum)
-                        .initOppositePiece(housesMap.get(nextPlayer(playerNum)).get(numHouses + 1 - houseNum));
+                getHouse(playerNumber, houseNumber)
+                        .initOppositePiece(getHouse(nextPlayer(playerNumber), numHouses + 1 - houseNumber));
             }
-            storeMap.get(playerNum).initNextPiece(housesMap.get(nextPlayer(playerNum)).get(1));
-            storeMap.get(playerNum).initOppositePiece(getStore(nextPlayer(playerNum)));
+            getStore(playerNumber).initNextPiece(getHouse(nextPlayer(playerNumber), 1));
+            getStore(playerNumber).initOppositePiece(getStore(nextPlayer(playerNumber)));
         }
+    }
+
+    private House getHouse(int playerNumber, int houseNumber){
+        return housesMap.get(playerNumber).get(houseNumber);
+    }
+
+    public Store getStore(int playerNumber) {
+        return storeMap.get(playerNumber);
     }
 
     /**
@@ -68,7 +76,7 @@ public class Board {
      * seeds one by one to the next pieces. The last piece sowed is captured if possible. Returns the last piece sowed.
      */
     public Piece sow(int houseNumber, int playerNumber) {
-        Piece piece = housesMap.get(playerNumber).get(houseNumber);
+        Piece piece = getHouse(playerNumber, houseNumber);
         int seedsToSow = piece.getCountAndRemoveSeeds();
         while (seedsToSow > 0) {
             piece = piece.next();
@@ -81,12 +89,8 @@ public class Board {
         return piece;
     }
 
-    public Store getStore(int playerNumber) {
-        return storeMap.get(playerNumber);
-    }
-
-    public int nextPlayer(int playerNum) {
-        return playerNum % numPlayers + 1;
+    public int nextPlayer(int playerNumber) {
+        return playerNumber % numPlayers + 1;
     }
 
     public List<House> getHouses(int playerNumber) {
@@ -99,7 +103,7 @@ public class Board {
     }
 
     public boolean houseIsEmpty(int houseNumber, int playerNumber) {
-        return housesMap.get(playerNumber).get(houseNumber).isEmpty();
+        return getHouse(playerNumber, houseNumber).isEmpty();
     }
 
     public boolean housesAreEmpty(int playerNumber) {
