@@ -19,20 +19,12 @@ public class GameService {
 
     private int currentTurnsPlayer;
 
-    /**
-     * Initialises a game of Kalah. Throws KalahException if there aren't enough houses, seeds, or players. Player 1
-     * will move first.
-     */
     public GameService(Board board) {
         this.board = board;
         this.scoreService = new ScoreService(board);
         currentTurnsPlayer = 1;
     }
 
-    /**
-     * If valid, retrieves the given house for the current turns player and sows the board and then determines if the
-     * player should get a repeat turn based on the last piece sowed. Returns the outcome of the move.
-     */
     public MoveOutcome validateAndMakeMove(int houseNumber) {
         MoveOutcome outcome = validateMove(houseNumber);
         if (!outcome.equals(VALID)) {

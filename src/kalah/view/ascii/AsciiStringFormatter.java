@@ -13,7 +13,10 @@ import static kalah.util.MathUtil.isSameParity;
 import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
-public class AsciiFormatter {
+/**
+ * Formats strings for an Ascii Observer.
+ */
+public class AsciiStringFormatter {
 
     private static final int ADDITIONAL_CHARACTERS_PER_HOUSE = 4; // i.e. " [] "
     private static final int ADDITIONAL_CHARACTERS_PER_STORE = 2; // i.e. " 10 ". Two additional spaces.
@@ -29,7 +32,7 @@ public class AsciiFormatter {
 
     private final int maxHouseNumberLength;
 
-    AsciiFormatter(int maxSeedCountLength, int maxHouseNumberLength) {
+    AsciiStringFormatter(int maxSeedCountLength, int maxHouseNumberLength) {
         this.maxSeedCountLength = maxSeedCountLength;
         this.maxHouseNumberLength = maxHouseNumberLength;
     }

@@ -25,8 +25,7 @@ public class Board {
     private final Map<Integer, Store> storeMap;
 
     /**
-     * Initialises and stores board pieces into maps for efficient look ups and connects the pieces by initialising
-     * their next and opposite pieces.
+     * Initialises and stores board pieces into maps for efficient look ups.
      */
     Board(int numHouses, int numInitialSeeds, int numPlayers) {
         if (numHouses < 1 || numInitialSeeds < 1 || numPlayers < 2) {
@@ -67,24 +66,22 @@ public class Board {
     }
 
     public House getHouse(int playerNumber, int houseNumber) {
+        if (!housesMap.containsKey(playerNumber) || !housesMap.get(playerNumber).containsKey(houseNumber)){
+            throw new KalahException(String.format("House doesn't exist: player (%d), house (%d).", playerNumber,
+                    houseNumber));
+        }
         return housesMap.get(playerNumber).get(houseNumber);
     }
 
     public Store getStore(int playerNumber) {
+        if (!storeMap.containsKey(playerNumber)){
+            throw new KalahException(String.format("Store doesn't exist: player (%d).", playerNumber));
+        }
         return storeMap.get(playerNumber);
     }
 
     public int nextPlayer(int playerNumber) {
         return playerNumber % numPlayers + 1;
-    }
-
-    public List<House> getHouses(int playerNumber) {
-        Map<Integer, House> playersHouses = housesMap.get(playerNumber);
-        List<House> houses = new ArrayList<>();
-        for (int i = 1; i <= playersHouses.size(); i++) {
-            houses.add(playersHouses.get(i));
-        }
-        return houses;
     }
 
     public boolean houseIsEmpty(int houseNumber, int playerNumber) {
@@ -98,6 +95,14 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public List<House> getHouses(int playerNumber) {
+        List<House> houses = new ArrayList<>();
+        for (int i = 1; i <= numHouses; i++) {
+            houses.add(getHouse(playerNumber, i));
+        }
+        return houses;
     }
 
     public int getNumPlayers() {

@@ -2,7 +2,6 @@ package kalah.model;
 
 /**
  * A continuous board factory constructs a board such that pieces are linked in numerical order.
- * i.e. House 1 -> House 2 .. -> Store.
  */
 public class ContinuousBoardFactory extends BoardFactory {
 
