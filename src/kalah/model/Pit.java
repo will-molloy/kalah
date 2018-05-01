@@ -62,6 +62,8 @@ public abstract class Pit {
         return amountRemoved;
     }
 
+    public abstract boolean getsRepeatTurn(int playerNumber);
+
     public final int seedCount() {
         return seedCount;
     }
@@ -69,7 +71,5 @@ public abstract class Pit {
     final boolean isEmpty() {
         return seedCount == 0;
     }
-
-    public abstract boolean getsRepeatTurn(int playerNumber);
 
 }

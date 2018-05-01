@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Represents a Kalah board.
- */
 public abstract class Board {
 
     final int numPlayers;
@@ -50,7 +47,21 @@ public abstract class Board {
 
     abstract void connectBoardPits();
 
-    public abstract Pit sow(int houseNumber, int playerNumber);
+    /**
+     * Sows the board starting from the given house; this consists of removing seeds from the starting pit and adding
+     * seeds one by one to the next pits. The last pit sowed is captured if possible. Returns the last pit sowed.
+     */
+    public Pit sow(int houseNumber, int playerNumber) {
+        Pit pit = getHouse(playerNumber, houseNumber);
+        int seedsToSow = pit.getCountAndRemoveSeeds();
+        while (seedsToSow > 0) {
+            pit = pit.next();
+            seedsToSow -= pit.sowSeedIfPlayerCan(playerNumber);
+        }
+        int seedsCaptured = pit.captureIfPlayerCan(playerNumber);
+        getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
+        return pit;
+    }
 
     House getHouse(int playerNumber, int houseNumber) {
         if (!housesMap.containsKey(playerNumber) || !housesMap.get(playerNumber).containsKey(houseNumber)) {
