@@ -10,18 +10,14 @@ public abstract class Pit {
 
     int seedCount;
 
-    Pit oppositePit;
-
     private Pit nextPit;
+
+    Pit oppositePit;
 
     Pit(int playerNumber, int seedCount) {
         this.playerNumber = playerNumber;
         this.seedCount = seedCount;
     }
-
-    abstract boolean canCapture(int playerNumber);
-
-    abstract int capture();
 
     final void initNextPit(Pit pit) {
         if (this.nextPit == null) {
@@ -39,9 +35,6 @@ public abstract class Pit {
         return nextPit;
     }
 
-    /**
-     * Template method which first checks this pit can be sowed by the player before proceeding.
-     */
     final int sowSeedsIfPlayerCan(int amount, int playerNumber) {
         if (canSow(playerNumber)) {
             seedCount += amount;
@@ -57,6 +50,18 @@ public abstract class Pit {
         return sowSeedsIfPlayerCan(1, playerNumber);
     }
 
+    int captureIfPlayerCan(int playerNumber){
+        return canCapture(playerNumber) ? getCountAndRemoveSeeds() + oppositePit.getCountAndRemoveSeeds() : 0;
+    }
+
+    abstract boolean canCapture(int playerNumber);
+
+    final int getCountAndRemoveSeeds() {
+        int amountRemoved = seedCount;
+        seedCount = 0;
+        return amountRemoved;
+    }
+
     public final int seedCount() {
         return seedCount;
     }
@@ -65,11 +70,6 @@ public abstract class Pit {
         return seedCount == 0;
     }
 
-    final int getCountAndRemoveSeeds() {
-        int amountRemoved = seedCount;
-        seedCount = 0;
-        return amountRemoved;
-    }
-
     public abstract boolean getsRepeatTurn(int playerNumber);
+
 }

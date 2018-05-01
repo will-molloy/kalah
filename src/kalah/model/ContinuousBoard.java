@@ -4,7 +4,6 @@ public class ContinuousBoard extends Board {
 
     public ContinuousBoard(int numHouses, int numInitialSeeds, int numPlayers) {
         super(numHouses, numInitialSeeds, numPlayers);
-        connectBoardPits();
     }
 
     /**
@@ -35,6 +34,7 @@ public class ContinuousBoard extends Board {
      * Sows the board starting from the given house; this consists of removing seeds from the starting pit and adding
      * seeds one by one to the next pits. The last pit sowed is captured if possible. Returns the last pit sowed.
      */
+    @Override
     public Pit sow(int houseNumber, int playerNumber) {
         Pit pit = getHouse(playerNumber, houseNumber);
         int seedsToSow = pit.getCountAndRemoveSeeds();
@@ -42,10 +42,8 @@ public class ContinuousBoard extends Board {
             pit = pit.next();
             seedsToSow -= pit.sowSeedIfPlayerCan(playerNumber);
         }
-        if (pit.canCapture(playerNumber)) {
-            int seedsCaptured = pit.capture();
-            getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
-        }
+        int seedsCaptured = pit.captureIfPlayerCan(playerNumber);
+        getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
         return pit;
     }
 

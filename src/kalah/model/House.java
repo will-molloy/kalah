@@ -30,14 +30,6 @@ public class House extends Pit {
         return playerNumber == this.playerNumber && seedCount == 1 && !oppositePit.isEmpty();
     }
 
-    /**
-     * Capturing consists of removing the seeds from this house and the opposite house.
-     */
-    @Override
-    int capture() {
-        return getCountAndRemoveSeeds() + oppositePit.getCountAndRemoveSeeds();
-    }
-
     public int getHouseNumber() {
         return houseNumber;
     }

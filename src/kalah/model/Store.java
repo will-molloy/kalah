@@ -30,8 +30,4 @@ public class Store extends Pit {
         return false;
     }
 
-    @Override
-    int capture() {
-        return 0;
-    }
 }
