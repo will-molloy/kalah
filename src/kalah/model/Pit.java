@@ -10,9 +10,9 @@ public abstract class Pit {
 
     int seedCount;
 
-    private Pit nextPit;
-
     Pit oppositePit;
+
+    private Pit nextPit;
 
     Pit(int playerNumber, int seedCount) {
         this.playerNumber = playerNumber;
@@ -50,7 +50,7 @@ public abstract class Pit {
         return sowSeedsIfPlayerCan(1, playerNumber);
     }
 
-    int captureIfPlayerCan(int playerNumber){
+    int captureIfPlayerCan(int playerNumber) {
         return canCapture(playerNumber) ? getCountAndRemoveSeeds() + oppositePit.getCountAndRemoveSeeds() : 0;
     }
 
