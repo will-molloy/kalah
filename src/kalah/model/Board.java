@@ -10,11 +10,11 @@ import java.util.Map;
 /**
  * Represents a Kalah board.
  */
-public class Board {
+public abstract class Board {
 
-    private final int numPlayers;
+    final int numPlayers;
 
-    private final int numHouses;
+    final int numHouses;
 
     private final int numInitialSeeds;
 
@@ -25,7 +25,7 @@ public class Board {
     private final Map<Integer, Store> storeMap;
 
     /**
-     * Initialises and stores board pits into maps for efficient look ups.
+     * Initialises and stores board pits into maps for efficient look ups. Then connects the pits.
      */
     Board(int numHouses, int numInitialSeeds, int numPlayers) {
         if (numHouses < 1 || numInitialSeeds < 1 || numPlayers < 2) {
@@ -45,28 +45,15 @@ public class Board {
             this.housesMap.put(playerNum, houses);
             this.storeMap.put(playerNum, new Store(playerNum, 0));
         }
+        connectBoardPits();
     }
 
-    /**
-     * Sows the board starting from the given pit; this consists of removing seeds from the starting pit and adding
-     * seeds one by one to the next pits. The last pit sowed is captured if possible. Returns the last pit sowed.
-     */
-    public Pit sow(int houseNumber, int playerNumber) {
-        Pit pit = getHouse(playerNumber, houseNumber);
-        int seedsToSow = pit.getCountAndRemoveSeeds();
-        while (seedsToSow > 0) {
-            pit = pit.next();
-            seedsToSow -= pit.sowSeedIfPlayerCan(playerNumber);
-        }
-        if (pit.canCapture(playerNumber)) {
-            int seedsCaptured = pit.capture();
-            getStore(playerNumber).sowSeedsIfPlayerCan(seedsCaptured, playerNumber);
-        }
-        return pit;
-    }
+    abstract void connectBoardPits();
 
-    public House getHouse(int playerNumber, int houseNumber) {
-        if (!housesMap.containsKey(playerNumber) || !housesMap.get(playerNumber).containsKey(houseNumber)){
+    public abstract Pit sow(int houseNumber, int playerNumber);
+
+    House getHouse(int playerNumber, int houseNumber) {
+        if (!housesMap.containsKey(playerNumber) || !housesMap.get(playerNumber).containsKey(houseNumber)) {
             throw new KalahException(String.format("House doesn't exist: player (%d), house (%d).", playerNumber,
                     houseNumber));
         }
@@ -74,7 +61,7 @@ public class Board {
     }
 
     public Store getStore(int playerNumber) {
-        if (!storeMap.containsKey(playerNumber)){
+        if (!storeMap.containsKey(playerNumber)) {
             throw new KalahException(String.format("Store doesn't exist: player (%d).", playerNumber));
         }
         return storeMap.get(playerNumber);
@@ -116,4 +103,5 @@ public class Board {
     public int getNumInitialSeeds() {
         return numInitialSeeds;
     }
+
 }

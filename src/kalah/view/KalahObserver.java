@@ -9,7 +9,7 @@ public interface KalahObserver {
     /**
      * Notifies the next player to make a move and returns a string representing their move.
      */
-    String nextMove();
+    String promptNextMove();
 
     /**
      * Notifies the players the game was quit.
@@ -25,4 +25,5 @@ public interface KalahObserver {
      * Notifies the players their move was invalid (empty house).
      */
     void emptyHouse();
+
 }

@@ -29,7 +29,7 @@ public class AsciiObserver implements KalahObserver {
     }
 
     @Override
-    public String nextMove() {
+    public String promptNextMove() {
         printBoard();
         return printPrompt();
     }

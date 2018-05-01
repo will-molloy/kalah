@@ -14,7 +14,7 @@ import static kalah.util.StringFormatter.repeatString;
 import static kalah.util.StringFormatter.rightAlignInteger;
 
 /**
- * Formats strings for an Ascii Observer.
+ * Stores and formats string representations for an Ascii Observer.
  */
 public class AsciiStringFormatter {
 
