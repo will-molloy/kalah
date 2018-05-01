@@ -2,13 +2,13 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
-import kalah.model.ContinuousBoardFactory;
+import kalah.model.ContinuousBoard;
 import kalah.service.GameService;
 import kalah.service.MoveOutcome;
 import kalah.view.KalahObserver;
 import kalah.view.ascii.AsciiObserver;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.parseInt;
 import static kalah.service.MoveOutcome.GAME_OVER;
 import static kalah.service.MoveOutcome.INVALID_EMPTY_HOUSE;
 
@@ -32,7 +32,7 @@ public class Kalah {
     }
 
     private void wireGameAndObserver(IO io) {
-        game = new GameService(new ContinuousBoardFactory().getBoard(6, 4, 2));
+        game = new GameService(new ContinuousBoard(6, 4, 2));
         observer = new AsciiObserver(game, io);
     }
 

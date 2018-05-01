@@ -2,7 +2,7 @@ package kalah.model;
 
 public class ContinuousBoard extends Board {
 
-    ContinuousBoard(int numHouses, int numInitialSeeds, int numPlayers) {
+    public ContinuousBoard(int numHouses, int numInitialSeeds, int numPlayers) {
         super(numHouses, numInitialSeeds, numPlayers);
         connectBoardPits();
     }
