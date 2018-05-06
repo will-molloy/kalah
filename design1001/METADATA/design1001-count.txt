@@ -1,0 +1,1 @@
+design1001	kalah.Board(19),kalah.BoardManager(19),kalah.IOManager(19),kalah.Kalah(19),kalah.TurnManager(19)	5	95

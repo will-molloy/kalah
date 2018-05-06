@@ -1,0 +1,120 @@
+<h1>CK Metrics</h1>
+<p></p>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <th style="text-align:left">Timestamp</th>
+    <td>Sat May 05 10:59:08 NZST 2018</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">Tool</th>
+    <td>mete-analysis(ck metrics):20180206T1230</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">System</th>
+    <td>design1001</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">Codebase</th>
+    <td>/opt/code_corpora/grad005-01/grad005-01/design1001/design1001</td>
+  </tr>
+</table>
+<h3>Measurements</h3>
+<h4>Metadata<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <td colspan="6">WMC (Size)</td>
+    <td>UnboundedCount</td>
+    <td>(srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (srccons) Consider constructors as invokers as creating coupling; (init) Record all dependencies including those in all initialisers; (raw) Do not record dependencies due to synthetic constructs; (srcmem) Include dependencies to members of all visibilities in source</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="6">LCOM (Cohesion)</td>
+    <td>UnboundedCount</td>
+    <td>(srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (srcmeth) Do not consider constructors as invokers as creating coupling; (init) Record all dependencies including those in all initialisers; (srcmem) Include dependencies to members of all visibilities in source</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="6">CBO (Coupling)</td>
+    <td>UnboundedCount</td>
+    <td>(trgtdcl) Only record dependencies to target modules whose declarations have been seen; (srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (trgtsttic) Record dependencies to both instance and static fields and methods in the target module; (srccons) Consider constructors as invokers as creating coupling; (trgtcons) Record both invoking methods and calling construtors as creating dependencies; (type) Record dependencies between all types, including interfaces, enums, an annotations; (anc) Include dependencies to ancestors of source; (desc) Include descendants to ancestors of source; (inh) Include dependencies on targets whose accessed members were inherited; (poly) Include dependencies on targets whose members were accessed via polymorphism; (bidir) Dependencies are recorded as bi-directional. If A has a dependency to B, then B has a dependency to A; (fanout) Record only dependencies from source to target (no-op when bidir); (mod) Record dependencies between modules (as opposed to between packages); (pres) Record only the presence (or not) of an occurrence of a dependency between entities; (nest) Consider nested or enclosing types are separate; (raw) Do not record dependencies due to synthetic constructs</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="6">RFC (Coupling)</td>
+    <td>UnboundedCount</td>
+    <td>(trgtall) Record dependencies to target modules whether or not the declarations have been seen; (srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (trgtsttic) Record dependencies to both instance and static fields and methods in the target module; (trgtcons) Record both invoking methods and calling construtors as creating dependencies; (type) Record dependencies between all types, including interfaces, enums, an annotations</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="6">NOC (Inheritance)</td>
+    <td>UnboundedCount</td>
+    <td>(srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (srccons) Consider constructors as invokers as creating coupling; (init) Record all dependencies including those in all initialisers; (raw) Do not record dependencies due to synthetic constructs; (srcmem) Include dependencies to members of all visibilities in source</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="6">DIT (Inheritance)</td>
+    <td>UnboundedCount</td>
+    <td>(srcsttc) Record dependencies with respect to both instance and static fields and methods in the source module; (srccons) Consider constructors as invokers as creating coupling; (init) Record all dependencies including those in all initialisers; (raw) Do not record dependencies due to synthetic constructs; (srcmem) Include dependencies to members of all visibilities in source</td>
+  </tr>
+</table>
+<h4>Data<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <th>Entity</th>
+    <th>WMC (Size)</th>
+    <th>LCOM (Cohesion)</th>
+    <th>CBO (Coupling)</th>
+    <th>RFC (Coupling)</th>
+    <th>NOC (Inheritance)</th>
+    <th>DIT (Inheritance)</th>
+  </tr>
+  <tr valign=top>
+    <td>kalah.AbstractBoard</td>
+    <td>11</td>
+    <td>45</td>
+    <td>4</td>
+    <td>13</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.Board</td>
+    <td>11</td>
+    <td>0</td>
+    <td>3</td>
+    <td>19</td>
+    <td>0</td>
+    <td>2</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.BoardManager</td>
+    <td>5</td>
+    <td>0</td>
+    <td>3</td>
+    <td>30</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.IOManager</td>
+    <td>8</td>
+    <td>0</td>
+    <td>3</td>
+    <td>27</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.Kalah</td>
+    <td>3</td>
+    <td>0</td>
+    <td>4</td>
+    <td>17</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.TurnManager</td>
+    <td>3</td>
+    <td>0</td>
+    <td>1</td>
+    <td>4</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+</table>

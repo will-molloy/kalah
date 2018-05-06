@@ -1,0 +1,1 @@
+design1019	kalah.Kalah(19),kalah.controller.DefaultController(19),kalah.model.DefaultModel(19),kalah.model.House(228),kalah.model.Player(38),kalah.model.Store(38),kalah.view.DefaultView(19)	7	380

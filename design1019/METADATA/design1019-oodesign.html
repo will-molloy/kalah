@@ -1,0 +1,694 @@
+<h1>OO Measurements</h1>
+<p>Description of static structure of system. Includes measurements of individual modules and measurements of the overall design.</p>
+<h3>Dataset attributes</h3>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <th style="text-align:left">Timestamp</th>
+    <td>Thu Apr 26 20:45:43 NZST 2018</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">Tool</th>
+    <td>mete-analysis(static structure):20180206T1230</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">System</th>
+    <td>design1019</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">Codebase</th>
+    <td>/opt/code_corpora/grad005-01/grad005-01/design1019/design1019</td>
+  </tr>
+</table>
+<h3>Module Attributes</h3>
+<h4>Metadata<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <td colspan="25">Ce</td>
+    <td>UnboundedCount</td>
+    <td>Efferent coupling - Total number of user-defined modules (including inherited) this module has a dependency on</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">Ca</td>
+    <td>UnboundedCount</td>
+    <td>Afferent coupling - Total number of user-defined modules (including inherited) that are dependent on this module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">CON</td>
+    <td>UnboundedCount</td>
+    <td>Total number of constructors in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">DIF</td>
+    <td>UnboundedCount</td>
+    <td>Total number of instance fields DECLARED in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">DIM</td>
+    <td>UnboundedCount</td>
+    <td>Total number of instance methods DECLARED in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">DSF</td>
+    <td>UnboundedCount</td>
+    <td>Total number of NON FINAL static fields DECLARED in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">DSM</td>
+    <td>UnboundedCount</td>
+    <td>Total number of static methods (not counting main()) DECLARED in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">DSFF</td>
+    <td>UnboundedCount</td>
+    <td>Total number of FINAL static fields DECLARED in module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MIF</td>
+    <td>UnboundedCount</td>
+    <td>Module Instance Fields - Total number of instance fields in module (ie including inherited, not including libraries)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MIM</td>
+    <td>UnboundedCount</td>
+    <td>Module Instance Methods - Total number of instance methods in module (ie including inherited, not including libaries)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MSF</td>
+    <td>UnboundedCount</td>
+    <td>Module Static Fields - Total number of NON FINAL static fields in module (ie including inherited, not including libraries)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MSM</td>
+    <td>UnboundedCount</td>
+    <td>Module Static Methods - Total number of static methods (not counting main()) in module (ie including inherited, not including libraries)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MAIN</td>
+    <td>Flag[0|1]</td>
+    <td>Module has main() entry-point method</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">CLS</td>
+    <td>Flag[0|1]</td>
+    <td>Module is a class (and not an enum or exception)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">INT</td>
+    <td>Flag[0|1]</td>
+    <td>Module is interface</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">ENM</td>
+    <td>Flag[0|1]</td>
+    <td>Module is enum</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">ANN</td>
+    <td>Flag[0|1]</td>
+    <td>Module is annotation</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">EXP</td>
+    <td>Flag[0|1]</td>
+    <td>Modules is exception</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">NST</td>
+    <td>Flag[0|1]</td>
+    <td>Module is nested</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">EXT</td>
+    <td>Flag[0|1]</td>
+    <td>Module extends another (excluding Object)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">IMP</td>
+    <td>Flag[0|1]</td>
+    <td>Module (class) implements at least one (interface)</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MDUInh</td>
+    <td>Flag[0|1]</td>
+    <td>Module is defined using inheritance (non exception that extends or implements something that is not java.lang.Object</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">MInhF</td>
+    <td>Flag[0|1]</td>
+    <td>Some other module inherits from (implements or extends) this module</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">CeR</td>
+    <td>BoundedReal[0.0-1.0]</td>
+    <td>Ratio of Ce to Total_Modules</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="25">CaR</td>
+    <td>BoundedReal[0.0-1.0]</td>
+    <td>Ratio of Ca to Total_Modules</td>
+  </tr>
+</table>
+<h4>Data<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <th>Entity</th>
+    <th>Ce</th>
+    <th>Ca</th>
+    <th>CON</th>
+    <th>DIF</th>
+    <th>DIM</th>
+    <th>DSF</th>
+    <th>DSM</th>
+    <th>DSFF</th>
+    <th>MIF</th>
+    <th>MIM</th>
+    <th>MSF</th>
+    <th>MSM</th>
+    <th>MAIN</th>
+    <th>CLS</th>
+    <th>INT</th>
+    <th>ENM</th>
+    <th>ANN</th>
+    <th>EXP</th>
+    <th>NST</th>
+    <th>EXT</th>
+    <th>IMP</th>
+    <th>MDUInh</th>
+    <th>MInhF</th>
+    <th>CeR</th>
+    <th>CaR</th>
+  </tr>
+  <tr valign=top>
+    <td>kalah.Kalah</td>
+    <td>7</td>
+    <td>0</td>
+    <td>1</td>
+    <td>3</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0.538</td>
+    <td>0.000</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.KalahConstants</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>9</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0.000</td>
+    <td>0.000</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.controller.Controller</td>
+    <td>0</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0.000</td>
+    <td>0.154</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.controller.DefaultController</td>
+    <td>10</td>
+    <td>1</td>
+    <td>1</td>
+    <td>2</td>
+    <td>6</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td>6</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0.769</td>
+    <td>0.077</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.DefaultModel</td>
+    <td>4</td>
+    <td>3</td>
+    <td>1</td>
+    <td>2</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0.308</td>
+    <td>0.231</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.House</td>
+    <td>1</td>
+    <td>4</td>
+    <td>1</td>
+    <td>1</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3</td>
+    <td>7</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0.077</td>
+    <td>0.308</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.Model</td>
+    <td>1</td>
+    <td>4</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0.077</td>
+    <td>0.308</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.PitBase</td>
+    <td>0</td>
+    <td>5</td>
+    <td>1</td>
+    <td>2</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0.000</td>
+    <td>0.385</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.Player</td>
+    <td>3</td>
+    <td>5</td>
+    <td>1</td>
+    <td>5</td>
+    <td>9</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>5</td>
+    <td>9</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0.231</td>
+    <td>0.385</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.model.Store</td>
+    <td>1</td>
+    <td>3</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0.077</td>
+    <td>0.231</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.setting.GameSetting</td>
+    <td>0</td>
+    <td>4</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>6</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>6</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0.000</td>
+    <td>0.308</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.view.DefaultView</td>
+    <td>8</td>
+    <td>2</td>
+    <td>2</td>
+    <td>5</td>
+    <td>14</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>5</td>
+    <td>14</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0.615</td>
+    <td>0.154</td>
+  </tr>
+  <tr valign=top>
+    <td>kalah.view.View</td>
+    <td>1</td>
+    <td>3</td>
+    <td>0</td>
+    <td>0</td>
+    <td>6</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>6</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0.077</td>
+    <td>0.231</td>
+  </tr>
+</table>
+<h3>Design Attributes</h3>
+<h4>Metadata<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <td colspan="14">Total_Modules</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#CLS</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are CLS in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#INT</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are INT in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#ENM</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are ENM in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#ANN</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are ANN in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#EXP</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are EXP in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#NST</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are NST in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#MAIN</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are MAIN in Module Attributes</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">DUI</td>
+    <td>BoundedReal[0.0-1.0]</td>
+    <td>Proportion of user-defined modules defined using inheritance</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">IF</td>
+    <td>BoundedReal[0.0-1.0]</td>
+    <td>Proportion of user-defined modules that are inherited from</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#IND</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that are independent, depend on no other user-defined type</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">#NDP</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules that have no other modules depend on them</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">NoInstanceMethods</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules with no instance methods</td>
+  </tr>
+  <tr valign=top>
+    <td colspan="14">NoInstanceFields</td>
+    <td>UnboundedCount</td>
+    <td>Number of modules with no instance fields</td>
+  </tr>
+</table>
+<h4>Data<h4>
+<table style="empty-cells: show" border>
+  <tr valign=top>
+    <th style="text-align:left">Total_Modules</th>
+    <td>13</td>
+    <td>[kalah.Kalah, kalah.KalahConstants, kalah.controller.Controller, kalah.controller.DefaultController, kalah.model.DefaultModel, kalah.model.House, kalah.model.Model, kalah.model.PitBase, kalah.model.Player, kalah.model.Store, kalah.setting.GameSetting, kalah.view.DefaultView, kalah.view.View]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#CLS</th>
+    <td>10</td>
+    <td>[kalah.Kalah, kalah.KalahConstants, kalah.controller.DefaultController, kalah.model.DefaultModel, kalah.model.House, kalah.model.PitBase, kalah.model.Player, kalah.model.Store, kalah.setting.GameSetting, kalah.view.DefaultView]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#INT</th>
+    <td>3</td>
+    <td>[kalah.controller.Controller, kalah.model.Model, kalah.view.View]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#ENM</th>
+    <td>0</td>
+    <td>[]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#ANN</th>
+    <td>0</td>
+    <td>[]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#EXP</th>
+    <td>0</td>
+    <td>[]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#NST</th>
+    <td>0</td>
+    <td>[]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#MAIN</th>
+    <td>1</td>
+    <td>[kalah.Kalah]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">DUI</th>
+    <td>0.385</td>
+    <td>5/13</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">IF</th>
+    <td>0.308</td>
+    <td>4/13</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#IND</th>
+    <td>4</td>
+    <td>[kalah.KalahConstants, kalah.controller.Controller, kalah.model.PitBase, kalah.setting.GameSetting]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">#NDP</th>
+    <td>2</td>
+    <td>[kalah.Kalah, kalah.KalahConstants]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">NoInstanceMethods</th>
+    <td>2</td>
+    <td>[kalah.KalahConstants, kalah.setting.GameSetting]</td>
+  </tr>
+  <tr valign=top>
+    <th style="text-align:left">NoInstanceFields</th>
+    <td>2</td>
+    <td>[kalah.KalahConstants, kalah.setting.GameSetting]</td>
+  </tr>
+</table>
+<h3>Relationships</h3>
+<img src="design1019-classdiagram.png">
