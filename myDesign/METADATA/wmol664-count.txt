@@ -1,0 +1,1 @@
+wmol664	kalah.Kalah(19),kalah.model.ContinuousBoard(19),kalah.model.House(228),kalah.model.Score(30),kalah.model.Store(38),kalah.service.GameService(19),kalah.service.ScoreService(19),kalah.view.ascii.AsciiObserver(19),kalah.view.ascii.AsciiStringFormatter(19)	9	410

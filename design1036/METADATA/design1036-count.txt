@@ -1,0 +1,1 @@
+design1036	edu.se701.assign2.mancala.MancalaBoard(19),edu.se701.assign2.mancala.MancalaPit(38),edu.se701.assign2.mancala.Pit(228),kalah.Kalah(19)	4	304

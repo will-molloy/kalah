@@ -1,0 +1,1 @@
+design1042	kalah.House(266),kalah.Kalah(19),kalah.KalahBoard(19),kalah.Player(38)	4	342

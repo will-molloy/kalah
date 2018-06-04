@@ -1,0 +1,1 @@
+design1020	kalah.Kalah(19),myPackage.Board(19),myPackage.House(228),myPackage.Player(38),myPackage.Printer(19),myPackage.RuleCapture(19),myPackage.RuleHouseIsEmpty(19),myPackage.RuleWillEndAtEmptyHouse(38),myPackage.Seed(2258),myPackage.SeedOverFlowAndHouseNumber(327),myPackage.Store(38)	11	3022

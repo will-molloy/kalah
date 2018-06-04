@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="myDesign-SOLID:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/myDesign_SOLID_jar</output-path>
+    <root id="archive" name="myDesign-SOLID.jar">
+      <element id="module-output" name="myDesign-SOLID" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/junit-3.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/kalah.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

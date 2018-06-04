@@ -1,0 +1,1 @@
+design1025	kalah.Board(19),kalah.House(38),kalah.Kalah(19),kalah.MancalaGame(19),kalah.Player(38),kalah.Store(38)	6	171
