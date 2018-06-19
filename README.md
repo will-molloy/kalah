@@ -1,3 +1,5 @@
+[![HitCount](http://hits.dwyl.io/wilmol/kalah.svg)](http://hits.dwyl.io/wilmol/kalah)
+
 # kalah
 se701 a3/a4/a5
 
